@@ -101,53 +101,60 @@ export default async function ArticlePage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-cream-50 flex flex-col">
+    <div className="min-h-screen bg-dark-950 flex flex-col relative overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
+      </div>
+
       <Navbar locale={locale} />
 
-      <article className="bg-white flex-1">
+      <article className="flex-1 relative z-10 pt-32">
         {/* Back nav */}
-        <div className="border-b border-stone-200">
+        <div className="border-b border-white/5">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <Link
               href={`${basePath}/blog`}
-              className="inline-flex items-center text-sm text-stone-600 hover:text-forest-800 transition-colors"
+              className="inline-flex items-center text-sm text-slate-400 hover:text-white transition-colors group"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               {locale === 'zh-TW' ? '返回文章列表' : 'Back to Articles'}
             </Link>
           </div>
         </div>
 
         {/* Header */}
-        <header className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-20 pb-12">
+        <header className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-12">
           <div className="flex items-center space-x-3 mb-6">
-            <span className="inline-flex items-center px-3 py-1 bg-amber-100 text-amber-700 text-xs uppercase tracking-editorial">
+            <span className="inline-flex items-center px-3 py-1 bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs uppercase tracking-editorial rounded-full">
               {article.category.name}
             </span>
             {article.tags.slice(0, 2).map((tag) => (
-              <span key={tag} className="text-xs text-stone-500">#{tag}</span>
+              <span key={tag} className="text-xs text-slate-500">#{tag}</span>
             ))}
           </div>
 
-          <h1 className="font-serif text-3xl md:text-5xl text-stone-900 leading-tight mb-6">
-            {article.title}
+          <h1 className="font-serif text-3xl md:text-5xl text-white leading-tight mb-6 text-balance">
+            <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+              {article.title}
+            </span>
           </h1>
 
-          <p className="text-lg text-stone-600 leading-relaxed mb-8">
+          <p className="text-lg text-slate-400 leading-relaxed mb-8">
             {article.excerpt}
           </p>
 
-          <div className="flex flex-wrap items-center gap-6 text-sm text-stone-600 pb-8 border-b border-stone-200">
+          <div className="flex flex-wrap items-center gap-6 text-sm text-slate-400 pb-8 border-b border-white/10">
             <span className="flex items-center">
-              <User className="w-4 h-4 mr-2 text-forest-700" />
+              <User className="w-4 h-4 mr-2 text-purple-400" />
               {article.author.name}
             </span>
             <span className="flex items-center">
-              <Clock className="w-4 h-4 mr-2 text-forest-700" />
+              <Clock className="w-4 h-4 mr-2 text-cyan-400" />
               {article.readingTime} {minRead}
             </span>
             <span className="flex items-center">
-              <Calendar className="w-4 h-4 mr-2 text-forest-700" />
+              <Calendar className="w-4 h-4 mr-2 text-emerald-400" />
               <time dateTime={article.publishedAt}>
                 {new Date(article.publishedAt).toLocaleDateString(dateLocale, {
                   month: 'long', day: 'numeric', year: 'numeric',
@@ -159,35 +166,39 @@ export default async function ArticlePage({ params }: Props) {
 
         {/* Content */}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-          <div className="prose prose-lg max-w-none">
-            {article.content.split('\n').map((paragraph, i) => {
-              if (paragraph.startsWith('## ')) {
-                return <h2 key={i} className="font-serif text-2xl md:text-3xl text-stone-900 mt-12 mb-4">{paragraph.replace('## ', '')}</h2>;
-              }
-              if (paragraph.startsWith('### ')) {
-                return <h3 key={i} className="font-serif text-xl text-stone-900 mt-8 mb-3">{paragraph.replace('### ', '')}</h3>;
-              }
-              if (paragraph.startsWith('# ')) {
-                return <h1 key={i} className="font-serif text-3xl text-stone-900 mt-8 mb-4">{paragraph.replace('# ', '')}</h1>;
-              }
-              if (paragraph.match(/^\d+\./)) {
-                return <li key={i} className="text-stone-700 leading-relaxed ml-6 mb-2 list-decimal">{paragraph.replace(/^\d+\.\s*/, '')}</li>;
-              }
-              if (paragraph.startsWith('- ')) {
-                return <li key={i} className="text-stone-700 leading-relaxed ml-6 mb-2 list-disc">{paragraph.replace(/^-\s*/, '')}</li>;
-              }
-              if (paragraph.trim() === '') return null;
-              return <p key={i} className="text-stone-700 leading-relaxed mb-6">{paragraph}</p>;
-            })}
+          <div className="glass-strong rounded-3xl p-8 md:p-12">
+            <div className="prose-editorial">
+              {article.content.split('\n').map((paragraph, i) => {
+                if (paragraph.startsWith('## ')) {
+                  return <h2 key={i}>{paragraph.replace('## ', '')}</h2>;
+                }
+                if (paragraph.startsWith('### ')) {
+                  return <h3 key={i}>{paragraph.replace('### ', '')}</h3>;
+                }
+                if (paragraph.startsWith('# ')) {
+                  return <h1 key={i}>{paragraph.replace('# ', '')}</h1>;
+                }
+                if (paragraph.match(/^\d+\./)) {
+                  return <li key={i} className="leading-relaxed ml-6 mb-2 list-decimal">{paragraph.replace(/^\d+\.\s*/, '')}</li>;
+                }
+                if (paragraph.startsWith('- ')) {
+                  return <li key={i} className="leading-relaxed ml-6 mb-2 list-disc">{paragraph.replace(/^-\s*/, '')}</li>;
+                }
+                if (paragraph.trim() === '') return null;
+                return <p key={i}>{paragraph}</p>;
+              })}
+            </div>
           </div>
         </div>
 
         {/* Related */}
         {related.length > 0 && (
-          <section className="bg-cream-50 border-t border-stone-200 py-20">
+          <section className="border-t border-white/5 py-20 bg-dark-900/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="font-serif text-2xl text-stone-900 mb-8 text-center">
-                {locale === 'zh-TW' ? '延伸閱讀' : 'Continue Reading'}
+              <h2 className="font-serif text-2xl text-white mb-8 text-center">
+                <span className="bg-gradient-to-r from-cyan-300 via-white to-purple-300 bg-clip-text text-transparent">
+                  {locale === 'zh-TW' ? '延伸閱讀' : 'Continue Reading'}
+                </span>
               </h2>
               <div className="grid md:grid-cols-3 gap-8">
                 {related.map((a) => (

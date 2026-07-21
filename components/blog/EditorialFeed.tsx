@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import EditorialGrid from '@/components/blog/EditorialGrid';
 import { getArticles, getFeaturedArticle } from '@/lib/strapi';
@@ -91,26 +91,31 @@ export default async function EditorialFeed({ locale }: EditorialFeedProps) {
   }
 
   return (
-    <>
-      <div className="mb-12 flex items-end justify-between border-b border-stone-200 pb-6">
-        <div>
-          <span className="text-xs uppercase tracking-editorial text-amber-500 mb-2 block">
-            {t('sectionSubtitle')}
-          </span>
-          <h2 className="font-serif text-3xl md:text-4xl text-stone-900">
-            {t('sectionTitle')}
-          </h2>
+    <section className="relative py-24 bg-dark-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 flex items-end justify-between">
+          <div>
+            <span className="inline-flex items-center gap-2 text-xs uppercase tracking-editorial text-purple-400 mb-2 px-4 py-1.5 glass rounded-full">
+              <Sparkles className="w-3 h-3" />
+              {t('sectionSubtitle')}
+            </span>
+            <h2 className="font-serif text-3xl md:text-4xl text-white mt-2">
+              <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+                {t('sectionTitle')}
+              </span>
+            </h2>
+          </div>
+          <Link
+            href={`${basePath}/blog`}
+            className="hidden md:inline-flex items-center text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors group"
+          >
+            {t('viewAll')}
+            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
-        <Link
-          href={`${basePath}/blog`}
-          className="hidden md:inline-flex items-center text-sm font-medium text-forest-800 hover:text-forest-700 transition-colors"
-        >
-          {t('viewAll')}
-          <ArrowRight className="ml-2 w-4 h-4" />
-        </Link>
-      </div>
 
-      <EditorialGrid featured={featured} articles={articles} locale={locale} />
-    </>
+        <EditorialGrid featured={featured} articles={articles} locale={locale} />
+      </div>
+    </section>
   );
 }

@@ -2,26 +2,47 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Calendar, BookOpen, Users } from 'lucide-react';
+import { ArrowRight, Calendar, BookOpen, Sparkles, Eye, Brain, Heart } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 interface HeroProps {
   locale: string;
 }
 
-const heroIcons = [
-  { label: { 'zh-TW': '代謝健康', 'en': 'Metabolic Health' }, bgClass: 'bg-forest-100', textClass: 'text-forest-700', icon: 'heart' },
-  { label: { 'zh-TW': '腸道韌性', 'en': 'Gut Resilience' }, bgClass: 'bg-amber-100', textClass: 'text-amber-600', icon: 'sun' },
-  { label: { 'zh-TW': '睡眠優化', 'en': 'Sleep Optimization' }, bgClass: 'bg-amber-100', textClass: 'text-amber-600', icon: 'moon' },
-  { label: { 'zh-TW': '長壽科學', 'en': 'Longevity' }, bgClass: 'bg-forest-100', textClass: 'text-forest-700', icon: 'shield' },
+const dimensionIcons = [
+  { 
+    Icon: Brain,
+    label: { 'zh-TW': '心智清晰', 'en': 'Mental Clarity' }, 
+    gradient: 'from-purple-500/20 to-purple-700/20',
+    borderColor: 'border-purple-500/30',
+    iconColor: 'text-purple-300',
+    glow: 'shadow-purple-500/20',
+  },
+  { 
+    Icon: Eye,
+    label: { 'zh-TW': '自我覺察', 'en': 'Inner Vision' }, 
+    gradient: 'from-cyan-500/20 to-cyan-700/20',
+    borderColor: 'border-cyan-500/30',
+    iconColor: 'text-cyan-300',
+    glow: 'shadow-cyan-500/20',
+  },
+  { 
+    Icon: Heart,
+    label: { 'zh-TW': '情緒韌性', 'en': 'Emotional Resilience' }, 
+    gradient: 'from-emerald-500/20 to-emerald-700/20',
+    borderColor: 'border-emerald-500/30',
+    iconColor: 'text-emerald-300',
+    glow: 'shadow-emerald-500/20',
+  },
+  { 
+    Icon: Sparkles,
+    label: { 'zh-TW': '蛻變升級', 'en': 'Transcendence' }, 
+    gradient: 'from-purple-500/20 via-cyan-500/20 to-emerald-500/20',
+    borderColor: 'border-purple-500/30',
+    iconColor: 'text-purple-300',
+    glow: 'shadow-purple-500/20',
+  },
 ];
-
-const iconPaths: Record<string, string> = {
-  heart: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
-  sun: 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z',
-  moon: 'M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z',
-  shield: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
-};
 
 export default function Hero({ locale }: HeroProps) {
   const t = useTranslations('hero');
@@ -29,16 +50,44 @@ export default function Hero({ locale }: HeroProps) {
   const labelLocale = locale === 'zh-TW' ? 'zh-TW' : 'en';
 
   return (
-    <section className="relative min-h-[90vh] flex items-center bg-cream-50 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.015]" 
+    <section className="relative min-h-screen flex items-center bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 overflow-hidden pt-20">
+      {/* Animated background grid */}
+      <div className="absolute inset-0 opacity-20" 
         style={{
-          backgroundImage: `radial-gradient(circle at 1px 1px, #1C2B26 1px, transparent 0)`,
-          backgroundSize: '40px 40px'
+          backgroundImage: `linear-gradient(rgba(168, 85, 247, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.1) 1px, transparent 1px)`,
+          backgroundSize: '50px 50px',
+          maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 70%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 70%)',
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      {/* Floating glow orbs */}
+      <motion.div 
+        className="absolute top-20 right-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl"
+        animate={{ 
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="absolute bottom-20 left-20 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl"
+        animate={{ 
+          scale: [1, 1.3, 1],
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      />
+      <motion.div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"
+        animate={{ 
+          scale: [1, 1.4, 1],
+          opacity: [0.1, 0.3, 0.1],
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <motion.div
@@ -51,9 +100,10 @@ export default function Hero({ locale }: HeroProps) {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center px-4 py-2 bg-forest-800/5 rounded-full mb-8"
+              className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full mb-8"
             >
-              <span className="text-xs uppercase tracking-editorial text-forest-800">
+              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-400/50" />
+              <span className="text-xs uppercase tracking-editorial text-slate-300">
                 {t('badge')}
               </span>
             </motion.div>
@@ -63,9 +113,11 @@ export default function Hero({ locale }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="font-serif text-4xl sm:text-5xl lg:text-6xl text-stone-900 leading-[1.1] mb-6"
+              className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-[1.1] mb-6 text-balance"
             >
-              {t('headline')}
+              <span className="bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent">
+                {t('headline')}
+              </span>
             </motion.h1>
 
             {/* Subheadline */}
@@ -73,7 +125,7 @@ export default function Hero({ locale }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-lg text-stone-600 leading-relaxed mb-10 max-w-xl"
+              className="text-lg text-slate-400 leading-relaxed mb-10 max-w-xl"
             >
               {t('subheadline')}
             </motion.p>
@@ -87,17 +139,22 @@ export default function Hero({ locale }: HeroProps) {
             >
               <Link
                 href={`${basePath}/#book`}
-                className="inline-flex items-center justify-center px-8 py-4 bg-forest-800 text-cream-50 text-sm uppercase tracking-editorial font-medium hover:bg-forest-700 transition-all duration-300 group"
+                className="group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-cyan-500 text-white text-sm uppercase tracking-editorial font-medium rounded-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/40 hover:scale-105"
               >
-                <Calendar className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                {t('primaryCta')}
+                <span className="relative z-10 flex items-center">
+                  <Calendar className="w-4 h-4 mr-2" />
+                  {t('primaryCta')}
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Link>
               <Link
                 href={`${basePath}/blog`}
-                className="inline-flex items-center justify-center px-8 py-4 border border-stone-300 text-stone-800 text-sm uppercase tracking-editorial font-medium hover:border-forest-800 hover:text-forest-800 transition-all duration-300 group"
+                className="group inline-flex items-center justify-center px-8 py-4 glass text-white text-sm uppercase tracking-editorial font-medium rounded-xl transition-all duration-300 hover:bg-white/10 hover:scale-105"
               >
-                <BookOpen className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
+                <BookOpen className="w-4 h-4 mr-2" />
                 {t('secondaryCta')}
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
 
@@ -112,13 +169,13 @@ export default function Hero({ locale }: HeroProps) {
                 {[1, 2, 3, 4, 5].map((i) => (
                   <div
                     key={i}
-                    className="w-10 h-10 rounded-full bg-forest-100 border-2 border-cream-50 flex items-center justify-center"
+                    className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/30 to-cyan-500/30 border-2 border-dark-900 backdrop-blur-sm flex items-center justify-center"
                   >
-                    <Users className="w-5 h-5 text-forest-600" />
+                    <Sparkles className="w-4 h-4 text-purple-300" />
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-stone-600">
+              <p className="text-sm text-slate-400">
                 {t('socialProof')}
               </p>
             </motion.div>
@@ -131,24 +188,63 @@ export default function Hero({ locale }: HeroProps) {
             transition={{ duration: 1, delay: 0.3 }}
             className="relative hidden lg:block"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-forest-100/50 to-amber-100/30 rounded-3xl transform rotate-3" />
-            <div className="relative bg-gradient-to-br from-forest-50 to-amber-50/50 rounded-3xl p-12 aspect-[4/5] flex flex-col justify-center">
-              <div className="absolute top-8 right-8 w-24 h-24 border border-forest-200 rounded-full" />
-              <div className="absolute bottom-12 left-8 w-32 h-32 border border-amber-200 rounded-full" />
+            {/* Main glass card */}
+            <div className="relative glass-strong rounded-3xl p-12 aspect-[4/5] flex flex-col justify-center overflow-hidden">
+              {/* Animated glow rings */}
+              <div className="absolute -top-20 -right-20 w-40 h-40 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
+              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-cyan-500/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
               
-              <div className="grid grid-cols-2 gap-8">
-                {heroIcons.map((item, i) => (
-                  <div key={i} className="text-center">
-                    <div className={`w-16 h-16 mx-auto mb-4 ${item.bgClass} rounded-2xl flex items-center justify-center`}>
-                      <svg className={`w-8 h-8 ${item.textClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={iconPaths[item.icon]} />
-                      </svg>
-                    </div>
-                    <p className={`text-xs uppercase tracking-editorial ${item.textClass}`}>{item.label[labelLocale]}</p>
-                  </div>
-                ))}
+              {/* Floating icons grid */}
+              <div className="grid grid-cols-2 gap-6 relative z-10">
+                {dimensionIcons.map((item, i) => {
+                  const Icon = item.Icon;
+                  return (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.5 + i * 0.1 }}
+                      className={`group relative p-4 rounded-2xl bg-gradient-to-br ${item.gradient} border ${item.borderColor} backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-2xl ${item.glow}`}
+                    >
+                      <div className="flex flex-col items-center text-center">
+                        <div className="w-12 h-12 mb-3 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                          <Icon className={`w-6 h-6 ${item.iconColor}`} />
+                        </div>
+                        <p className={`text-xs uppercase tracking-editorial ${item.iconColor} font-medium`}>
+                          {item.label[labelLocale]}
+                        </p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
+
+              {/* Center orbital decoration */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 pointer-events-none"
+              >
+                <div className="absolute inset-0 rounded-full border border-purple-500/20" />
+                <div className="absolute inset-4 rounded-full border border-cyan-500/20" />
+                <div className="absolute inset-8 rounded-full border border-emerald-500/20" />
+              </motion.div>
             </div>
+
+            {/* Floating accent card */}
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-6 -right-6 glass-strong rounded-2xl p-4 flex items-center gap-3 z-20"
+            >
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-xs text-slate-400">Level Up</p>
+                <p className="text-sm font-medium text-white">+847 XP</p>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
@@ -160,11 +256,11 @@ export default function Hero({ locale }: HeroProps) {
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
       >
-        <div className="w-6 h-10 border-2 border-stone-300 rounded-full flex justify-center p-2">
+        <div className="w-6 h-10 border-2 border-purple-400/30 rounded-full flex justify-center p-2">
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="w-1 h-2 bg-forest-400 rounded-full"
+            className="w-1 h-2 bg-gradient-to-b from-purple-400 to-cyan-400 rounded-full shadow-lg shadow-purple-400/50"
           />
         </div>
       </motion.div>

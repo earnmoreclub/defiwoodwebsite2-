@@ -12,28 +12,28 @@
     "bookSession": "Book Session"
   },
   "hero": {
-    "badge": "EST. 2026 · HOLISTIC HEALTH & METABOLIC WELLNESS",
-    "headline": "Cultivate Clarity. Restore Balance. Science-Backed Wellness for Modern Living.",
-    "subheadline": "Awareness Be bridges evidence-based metabolic health, gut resilience, and conscious living to help you thrive from the inside out.",
-    "primaryCta": "Schedule 1-on-1 Consultation",
+    "badge": "EST. 2026 · SELF-AWARENESS PLATFORM",
+    "headline": "Know Yourself. Level Up. Science-Backed Awakening for Modern Seekers.",
+    "subheadline": "Awareness Be bridges evidence-based neuroscience, embodied cognition, and conscious exploration to help you unlock your highest potential.",
+    "primaryCta": "Start Your Journey",
     "secondaryCta": "Explore Insights",
-    "socialProof": "Trusted by 5,000+ individuals seeking evidence-based vitality."
+    "socialProof": "Trusted by 5,000+ seekers on the path to self-mastery."
   },
   "pillars": {
-    "title": "Our Focus Areas",
-    "subtitle": "Three pillars to support your wellbeing",
+    "title": "Core Pillars",
+    "subtitle": "Three dimensions of self-awareness",
     "items": {
       "metabolic": {
-        "title": "Metabolic & Gut Vitality",
-        "description": "Rebalance your core biometrics through tailored nutrition protocols, biome optimization, and metabolic tracking."
+        "title": "Embodied Cognition",
+        "description": "Transform your mental clarity through body-mind integration, somatic practices, and neural pathway optimization."
       },
       "stress": {
-        "title": "Stress Resilience & Sleep",
-        "description": "Master your nervous system with clinical breathwork frameworks and circadian rhythm alignment."
+        "title": "Inner Resilience",
+        "description": "Master your nervous system with proven breathwork frameworks and emotional regulation mastery."
       },
       "consultations": {
-        "title": "Personalized Wellness Consultations",
-        "description": "Direct access to expert guidance, actionable biometrics analysis, and custom supplement blueprints."
+        "title": "1-on-1 Coaching",
+        "description": "Direct access to expert guidance, personalized inner work blueprints, and transformational sessions."
       }
     }
   },
@@ -68,9 +68,9 @@
   },
   "booking": {
     "sectionId": "book",
-    "header": "Begin Your Wellness Journey",
-    "subtext": "Select a date and time for your initial 45-minute holistic health intake consultation.",
-    "formTitle": "Book a Consultation",
+    "header": "Begin Your Transformation",
+    "subtext": "Select a date and time for your initial 45-minute awakening consultation.",
+    "formTitle": "Book a Session",
     "formDescription": "Fill in your details and we'll confirm your appointment within 24 hours.",
     "calTitle": "Select a Time",
     "calDescription": "Pick a slot that works best for you from the calendar below.",
@@ -80,8 +80,8 @@
       "namePlaceholder": "Your full name",
       "email": "Email Address",
       "emailPlaceholder": "[email protected]",
-      "goals": "Primary Health Goals",
-      "goalsPlaceholder": "e.g. better sleep, gut balance, more energy...",
+      "goals": "Primary Goals",
+      "goalsPlaceholder": "e.g. self-discovery, emotional mastery, clarity...",
       "preferredTime": "Preferred Time",
       "preferredTimePlaceholder": "e.g. Tuesday afternoons, weekend mornings",
       "submit": "Submit Booking Request",
@@ -113,11 +113,11 @@
   },
   "about": {
     "story": "Our Story",
-    "headline": "Born from a belief that wellness should be accessible, evidence-based, and deeply human.",
+    "headline": "Born from a belief that self-awareness should be accessible, evidence-based, and deeply transformative.",
     "p1": "Awareness Be was founded in 2026 on a simple premise: the modern wellness industry has lost its way. Too much noise, too little evidence, too many quick fixes and not enough depth.",
-    "p2": "We exist to bridge the gap between cutting-edge metabolic science and ancient wisdom — between gut resilience and mindful living, between personalized data and intuitive practice.",
-    "p3": "Every article we publish, every consultation we offer, every product we recommend passes through the same filter: is this evidence-backed? Is this aligned with holistic health? Would this serve someone we love?",
-    "quote": "\"We don't sell miracles. We cultivate clarity, restore balance, and provide the tools for evidence-based wellness that lasts.\""
+    "p2": "We exist to bridge the gap between cutting-edge neuroscience and ancient wisdom — between embodied cognition and mindful living, between personalized data and intuitive practice.",
+    "p3": "Every article we publish, every session we offer, every practice we recommend passes through the same filter: is this evidence-backed? Is this aligned with holistic growth? Would this serve someone we love?",
+    "quote": "\"We don't sell miracles. We cultivate clarity, restore balance, and provide the tools for evidence-based transformation that lasts.\""
   },
   "errors": {
     "notFoundTitle": "Page Not Found",
@@ -127,5 +127,155 @@
   "language": {
     "switchTo": "繁體中文",
     "current": "English"
+  },
+  "userProgress": {
+    "level": "Level",
+    "xp": "XP"
+  },
+  "mbti": {
+    "title": "MBTI Personality Test",
+    "subtitle": "Discover your personality type in under 2 minutes",
+    "startTest": "Start Test",
+    "questionOf": "Question {current} of {total}",
+    "previous": "Previous",
+    "next": "Next",
+    "submit": "See Results",
+    "result": "Your Result",
+    "retake": "Retake Test",
+    "shareResult": "Share Result",
+    "progress": "{percent}%",
+    "questions": {
+      "e1": {
+        "text": "After a busy week, how do you recharge?",
+        "a": "Go out with friends",
+        "b": "Relax alone"
+      },
+      "e2": {
+        "text": "At a party, you typically:",
+        "a": "Meet new people and start conversations",
+        "b": "Stick with familiar friends"
+      },
+      "s1": {
+        "text": "When solving a problem, you prefer to:",
+        "a": "Use proven methods and practical steps",
+        "b": "Explore creative and unconventional ideas"
+      },
+      "s2": {
+        "text": "When learning something new, you focus on:",
+        "a": " concrete facts and details",
+        "b": " big-picture concepts and possibilities"
+      },
+      "t1": {
+        "text": "When making decisions, you prioritize:",
+        "a": "Logic and consistency",
+        "b": "Feelings and how it affects others"
+      },
+      "t2": {
+        "text": "When someone is upset, you tend to:",
+        "a": "Offer logical solutions",
+        "b": "Show empathy and support"
+      },
+      "j1": {
+        "text": "How do you prefer to approach your day?",
+        "a": "Make a plan and stick to it",
+        "b": "Stay flexible and go with the flow"
+      },
+      "j2": {
+        "text": "When working on a project, you prefer to:",
+        "a": "Finish tasks well before the deadline",
+        "b": "Work under pressure close to the deadline"
+      }
+    },
+    "traits": {
+      "ei": {
+        "title": "Energy Direction",
+        "introvert": "Introverted",
+        "extrovert": "Extraverted"
+      },
+      "sn": {
+        "title": "Information Gathering",
+        "sensing": "Sensing",
+        "intuition": "Intuition"
+      },
+      "tf": {
+        "title": "Decision Making",
+        "thinking": "Thinking",
+        "feeling": "Feeling"
+      },
+      "jp": {
+        "title": "Lifestyle",
+        "judging": "Judging",
+        "perceiving": "Perceiving"
+      }
+    },
+    "types": {
+      "INTJ": {
+        "title": "Strategic Architect",
+        "desc": "You are a strategic thinker who sees the big picture. Independent and analytical, you excel at developing long-term plans and enjoy intellectual challenges."
+      },
+      "INTP": {
+        "title": "Logical Architect",
+        "desc": "You are a curious and analytical mind. Driven by logic and creativity, you love exploring complex ideas and finding innovative solutions."
+      },
+      "ENTJ": {
+        "title": "Commander",
+        "desc": "You are a natural leader with strong organizational abilities. Bold and confident, you excel at taking charge and driving projects forward."
+      },
+      "ENTP": {
+        "title": "Debater",
+        "desc": "You are an innovative thinker who loves intellectual debate. Creative and curious, you enjoy exploring new ideas and possibilities."
+      },
+      "INFJ": {
+        "title": "Advocate",
+        "desc": "You are an insightful idealist with a deep sense of compassion. Creative and dedicated, you strive to help others and make a meaningful impact."
+      },
+      "INFP": {
+        "title": "Mediator",
+        "desc": "You are a thoughtful idealist guided by your values. Creative and empathetic, you seek to understand others and find authentic expression."
+      },
+      "ENFJ": {
+        "title": "Protagonist",
+        "desc": "You are an inspiring leader with natural charisma. Passionate and idealistic, you motivate others to become their best selves."
+      },
+      "ENFP": {
+        "title": "Campaigner",
+        "desc": "You are an enthusiastic and creative spirit. Curious and optimistic, you see possibilities everywhere and inspire others with your energy."
+      },
+      "ISTJ": {
+        "title": "Logistician",
+        "desc": "You are a responsible and practical realist. Dependable and organized, you value honesty and take your commitments seriously."
+      },
+      "ISFJ": {
+        "title": "Defender",
+        "desc": "You are a loyal and supportive protector. Warm and caring, you are dedicated to helping others and maintaining harmony."
+      },
+      "ESTJ": {
+        "title": "Executive",
+        "desc": "You are a practical and organized leader. Strong-willed and dependable, you excel at managing projects and people."
+      },
+      "ESFJ": {
+        "title": "Consul",
+        "desc": "You are a warm and social organizer. Caring and supportive, you enjoy helping others and creating harmonious environments."
+      },
+      "ISTP": {
+        "title": "Virtuoso",
+        "desc": "You are a practical problem-solver who loves hands-on work. Analytical and adaptable, you enjoy understanding how things work."
+      },
+      "ISFP": {
+        "title": "Adventurer",
+        "desc": "You are a sensitive and artistic explorer. Gentle and flexible, you appreciate beauty and enjoy new experiences."
+      },
+      "ESTP": {
+        "title": "Entrepreneur",
+        "desc": "You are an energetic and practical achiever. Bold and adaptable, you thrive in dynamic situations and love taking action."
+      },
+      "ESFP": {
+        "title": "Entertainer",
+        "desc": "You are a spontaneous and enthusiastic performer. Fun-loving and outgoing, you live in the moment and love entertaining others."
+      }
+    },
+    "communication": "Communication Style",
+    "strengths": "Key Strengths",
+    "values": "What You Value"
   }
 }

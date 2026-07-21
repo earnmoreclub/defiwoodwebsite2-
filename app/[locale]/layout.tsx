@@ -17,9 +17,9 @@ export function generateStaticParams() {
 export const metadata: Metadata = {
   title: {
     template: '%s | Awareness Be',
-    default: 'Awareness Be — Holistic Health & Metabolic Wellness',
+    default: 'Awareness Be — Self-Awareness Gaming Platform',
   },
-  description: 'Evidence-based metabolic health, gut resilience, and conscious living for modern wellness seekers.',
+  description: 'Evidence-based neuroscience, embodied cognition, and conscious exploration for modern seekers.',
   icons: {
     icon: '/favicon.ico',
   },
@@ -37,8 +37,8 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className="antialiased bg-[#FAF8F5] text-[#1C2B26]">
+    <html lang={locale} suppressHydrationWarning className="dark">
+      <body className="antialiased bg-dark-950 text-slate-300 min-h-screen">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

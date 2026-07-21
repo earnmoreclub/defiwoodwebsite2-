@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
+  darkMode: 'class',
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -9,53 +10,42 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand colors from spec
-        cream: {
-          50: '#FAF8F5', // Main background
-          100: '#F5F0E6',
-          200: '#EFE8D8',
+        dark: {
+          950: '#08070d',
+          900: '#0f0d17',
+          800: '#151222',
+          700: '#1c1929',
+          600: '#252136',
         },
-        forest: {
-          50: '#F0F4F1',
-          100: '#DCE6DF',
-          200: '#B8CCBE',
-          300: '#8FAE99',
-          400: '#5F8470',
-          500: '#3F6453',
-          600: '#2F4D40',
-          700: '#263E33',
-          800: '#1C2B26', // Deep forest green - primary brand
-          900: '#192923',
+        purple: {
+          500: '#a855f7',
+          400: '#c084fc',
+          300: '#d8b4fe',
+          600: '#9333ea',
         },
-        amber: {
-          50: '#FAF8F5',
-          100: '#F2E6DA',
-          200: '#E5C9B3',
-          300: '#D4A373', // Muted warm amber - accent
-          400: '#BC8256',
-          500: '#A6673C',
-          600: '#8C5230',
-          700: '#724229',
-          800: '#5C3623',
-          900: '#4B2D1F',
+        emerald: {
+          500: '#10b981',
+          400: '#34d399',
+          300: '#6ee7b7',
+          600: '#059669',
         },
-        stone: {
-          50: '#FAFAF9',
-          100: '#F5F5F4',
-          200: '#E7E5E4',
-          300: '#D6D3D1',
-          400: '#A8A29E',
-          500: '#78716C',
-          600: '#57534E',
-          700: '#44403C',
-          800: '#292524',
-          900: '#1C1917',
-          950: '#0C0A09',
+        cyan: {
+          500: '#06b6d4',
+          400: '#22d3ee',
+          300: '#67e8f9',
+          600: '#0891b2',
+        },
+        glass: {
+          light: 'rgba(255, 255, 255, 0.05)',
+          medium: 'rgba(255, 255, 255, 0.08)',
+          dark: 'rgba(0, 0, 0, 0.3)',
+          border: 'rgba(255, 255, 255, 0.1)',
         },
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
         sans: ['"Inter"', '"Helvetica Neue"', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'sans-serif'],
       },
       letterSpacing: {
         editorial: '0.18em',
@@ -64,17 +54,12 @@ const config: Config = {
         prose: '42rem',
         'prose-lg': '48rem',
       },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: '42rem',
-          },
-        },
-      },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out forwards',
         'slide-up': 'slideUp 0.6s ease-out forwards',
         'scale-in': 'scaleIn 0.4s ease-out forwards',
+        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -89,6 +74,22 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'scale(0.95)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
+        glowPulse: {
+          '0%, 100%': { 
+            boxShadow: '0 0 20px rgba(168, 85, 247, 0.3), 0 0 40px rgba(6, 182, 212, 0.2)' 
+          },
+          '50%': { 
+            boxShadow: '0 0 30px rgba(168, 85, 247, 0.5), 0 0 60px rgba(6, 182, 212, 0.3)' 
+          },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
   },
