@@ -9,7 +9,7 @@ interface LanguageToggleProps {
 }
 
 const localeNames: Record<string, string> = {
-  'zh-TW': '繁體中文',
+  'zh-TW': '繁中',
   'en': 'EN',
 };
 
@@ -18,11 +18,9 @@ export default function LanguageToggle({ currentLocale }: LanguageToggleProps) {
   
   const getLocalizedPath = (newLocale: string) => {
     const segments = pathname.split('/');
-    // Handle the locale segment (could be 'en', 'zh-TW', or root for zh-TW default)
     if (segments[1] === 'en' || segments[1] === 'zh-TW') {
       segments[1] = newLocale === 'zh-TW' ? '' : newLocale;
     } else {
-      // If no locale in path, add one
       segments.splice(1, 0, newLocale === 'zh-TW' ? '' : newLocale);
     }
     return segments.join('/').replace(/\/+/g, '/');
@@ -33,11 +31,16 @@ export default function LanguageToggle({ currentLocale }: LanguageToggleProps) {
   return (
     <Link
       href={getLocalizedPath(switchLocale)}
-      className="flex items-center gap-1.5 text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
+      className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-800/50 border border-white/10 hover:border-purple-500/50 hover:bg-dark-700/50 transition-all duration-200"
       aria-label={`Switch to ${localeNames[switchLocale]}`}
+      title={`Switch language / 切換語言`}
     >
-      <Globe className="w-4 h-4" />
-      <span>{localeNames[switchLocale]}</span>
+      <Globe className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+      <span className="flex items-center gap-1 text-xs font-medium">
+        <span className={currentLocale === 'en' ? 'text-white' : 'text-slate-500'}>EN</span>
+        <span className="text-slate-600">/</span>
+        <span className={currentLocale === 'zh-TW' ? 'text-white' : 'text-slate-500'}>繁中</span>
+      </span>
     </Link>
   );
 }

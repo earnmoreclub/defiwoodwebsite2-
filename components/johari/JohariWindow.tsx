@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Check, Copy, Users, Eye, EyeOff, HelpCircle, Sparkles, Share2 } from 'lucide-react';
+import GameHeader from '@/components/layout/GameHeader';
 
-// 16 personality tags with bilingual content
 const PERSONALITY_TAGS = [
   { id: 'analytical', en: 'Analytical', zh: '理性', emoji: '🔬' },
   { id: 'compassionate', en: 'Compassionate', zh: '慈悲', emoji: '💜' },
@@ -49,7 +49,7 @@ const texts = {
     quadrantOpen: 'Open Self',
     quadrantOpenDesc: 'What you and others see',
     quadrantBlind: 'Blind Self',
-    quadrantBlindDesc: 'What others see, but you don\'t',
+    quadrantBlindDesc: "What others see, but you don't",
     quadrantHidden: 'Hidden Self',
     quadrantHiddenDesc: 'What you see, but others don\'t',
     quadrantUnknown: 'Unknown Self',
@@ -95,7 +95,6 @@ export default function JohariWindow() {
   const locale = (params.locale as Language) || 'en';
   const sessionId = params.sessionId as string | undefined;
   const t = texts[locale];
-  const isFriendView = !!sessionId && !sessionId.startsWith('user-');
 
   const [userTags, setUserTags] = useState<string[]>([]);
   const [friendTags, setFriendTags] = useState<string[] | null>(null);
@@ -105,7 +104,6 @@ export default function JohariWindow() {
   const [copied, setCopied] = useState(false);
   const [view, setView] = useState<'select' | 'share' | 'friend' | 'results'>('select');
 
-  // Load session data if sessionId exists
   useEffect(() => {
     if (sessionId) {
       fetch(`/api/johari?id=${sessionId}`)
@@ -123,13 +121,11 @@ export default function JohariWindow() {
     }
   }, [sessionId]);
 
-  const toggleTag = (tagId: string, isSelecting: boolean) => {
-    if (isSelecting) {
-      if (userTags.length < 5 && !userTags.includes(tagId)) {
-        setUserTags([...userTags, tagId]);
-      }
-    } else {
+  const toggleTag = (tagId: string) => {
+    if (userTags.includes(tagId)) {
       setUserTags(userTags.filter(t => t !== tagId));
+    } else if (userTags.length < 5) {
+      setUserTags([...userTags, tagId]);
     }
   };
 
@@ -177,7 +173,6 @@ export default function JohariWindow() {
     }
   };
 
-  // Calculate quadrants
   const allTagIds = PERSONALITY_TAGS.map(t => t.id);
   const bothSelected = userTags.filter(t => friendTags?.includes(t));
   const onlyFriendSelected = (friendTags || []).filter(t => !userTags.includes(t));
@@ -187,356 +182,246 @@ export default function JohariWindow() {
   const getTagById = (id: string) => PERSONALITY_TAGS.find(t => t.id === id);
   const getLabel = (tag: typeof PERSONALITY_TAGS[0]) => locale === 'zh-TW' ? tag.zh : tag.en;
 
-  // Selection View (User picks 5 tags)
+  const HeaderWrapper = ({ children }: { children: React.ReactNode }) => (
+    <div className="min-h-screen bg-dark-950 flex flex-col">
+      <GameHeader title="Johari Window" />
+      <main className="flex-1 pt-24 pb-12 px-4 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          {children}
+        </div>
+      </main>
+    </div>
+  );
+
+  // Selection View
   if (view === 'select') {
     return (
-      <div className="min-h-screen bg-dark-950 py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-cyan-400 mb-4">
-              <Users className="w-4 h-4" />
-              <span>Self-Awareness Game</span>
-            </div>
-            <h1 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-purple-300 via-white to-cyan-300 bg-clip-text text-transparent">
-              {t.title}
-            </h1>
-            <p className="text-slate-400 text-lg">{t.subtitle}</p>
+      <HeaderWrapper>
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-cyan-400 mb-4">
+            <Users className="w-4 h-4" />
+            <span>Self-Awareness Game</span>
           </div>
-
-          {/* Selection Card */}
-          <div className="glass rounded-3xl p-8 mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="font-serif text-xl text-white">{t.step1Title}</h2>
-              <span className="text-sm text-slate-400">
-                {userTags.length}/5 {t.selected}
-              </span>
-            </div>
-            <p className="text-slate-400 mb-6">{t.selectPrompt}</p>
-
-            {/* Tags Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {PERSONALITY_TAGS.map(tag => {
-                const isSelected = userTags.includes(tag.id);
-                return (
-                  <button
-                    key={tag.id}
-                    onClick={() => toggleTag(tag.id, !isSelected)}
-                    className={`
-                      relative p-4 rounded-xl border transition-all duration-200 text-left
-                      ${isSelected
-                        ? 'bg-purple-500/20 border-purple-500 text-white'
-                        : 'bg-dark-800/50 border-white/10 text-slate-300 hover:border-purple-500/50 hover:bg-dark-700/50'
-                      }
-                    `}
-                  >
-                    <span className="text-2xl mb-2 block">{tag.emoji}</span>
-                    <span className="font-medium block">{locale === 'zh-TW' ? tag.zh : tag.en}</span>
-                    {isSelected && (
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Generate Button */}
-            <div className="mt-8 text-center">
-              <button
-                onClick={generateShareLink}
-                disabled={userTags.length !== 5 || isLoading}
-                className={`
-                  inline-flex items-center gap-3 px-8 py-4 rounded-xl font-medium
-                  transition-all duration-300
-                  ${userTags.length === 5
-                    ? 'bg-gradient-to-r from-purple-600 via-purple-500 to-cyan-500 text-white hover:shadow-lg hover:shadow-purple-500/30'
-                    : 'bg-dark-700 text-slate-500 cursor-not-allowed'
-                  }
-                `}
-              >
-                {isLoading ? (
-                  <>
-                    <span className="animate-spin">⟳</span>
-                    {t.generating}
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="w-5 h-5" />
-                    {t.generateLink}
-                  </>
-                )}
-              </button>
-            </div>
+          <h1 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-purple-300 via-white to-cyan-300 bg-clip-text text-transparent">
+            {t.title}
+          </h1>
+          <p className="text-slate-400 text-lg">{t.subtitle}</p>
+        </div>
+        <div className="glass rounded-3xl p-8 mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-serif text-xl text-white">{t.step1Title}</h2>
+            <span className="text-sm text-slate-400">{userTags.length}/5 {t.selected}</span>
+          </div>
+          <p className="text-slate-400 mb-6">{t.selectPrompt}</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {PERSONALITY_TAGS.map(tag => {
+              const isSelected = userTags.includes(tag.id);
+              return (
+                <button
+                  key={tag.id}
+                  onClick={() => toggleTag(tag.id)}
+                  className={`relative p-4 rounded-xl border transition-all duration-200 text-left ${isSelected ? 'bg-purple-500/20 border-purple-500 text-white' : 'bg-dark-800/50 border-white/10 text-slate-300 hover:border-purple-500/50 hover:bg-dark-700/50'}`}
+                >
+                  <span className="text-2xl mb-2 block">{tag.emoji}</span>
+                  <span className="font-medium block">{locale === 'zh-TW' ? tag.zh : tag.en}</span>
+                  {isSelected && (
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center">
+                      <Check className="w-4 h-4 text-white" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <div className="mt-8 text-center">
+            <button
+              onClick={generateShareLink}
+              disabled={userTags.length !== 5 || isLoading}
+              className={`inline-flex items-center gap-3 px-8 py-4 rounded-xl font-medium transition-all duration-300 ${userTags.length === 5 ? 'bg-gradient-to-r from-purple-600 via-purple-500 to-cyan-500 text-white hover:shadow-lg hover:shadow-purple-500/30' : 'bg-dark-700 text-slate-500 cursor-not-allowed'}`}
+            >
+              {isLoading ? <><span className="animate-spin">⟳</span>{t.generating}</> : <><Sparkles className="w-5 h-5" />{t.generateLink}</>}
+            </button>
           </div>
         </div>
-      </div>
+      </HeaderWrapper>
     );
   }
 
   // Share View
   if (view === 'share' && generatedId) {
-    const shareUrl = typeof window !== 'undefined' 
-      ? `${window.location.origin}/${locale}/johari/${generatedId}`
-      : `/${locale}/johari/${generatedId}`;
-
+    const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}/${locale}/johari/${generatedId}` : `/${locale}/johari/${generatedId}`;
     return (
-      <div className="min-h-screen bg-dark-950 py-12 px-4">
-        <div className="max-w-2xl mx-auto text-center">
+      <HeaderWrapper>
+        <div className="text-center">
           <div className="glass rounded-3xl p-8">
             <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <Share2 className="w-8 h-8 text-white" />
             </div>
             <h2 className="font-serif text-2xl text-white mb-4">{t.step2Title}</h2>
             <p className="text-slate-400 mb-6">{t.shareText}</p>
-
             <div className="bg-dark-800 rounded-xl p-4 mb-6 break-all text-left">
               <code className="text-cyan-400 text-sm">{shareUrl}</code>
             </div>
-
-            <button
-              onClick={copyToClipboard}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-xl transition-colors"
-            >
-              {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
-              {copied ? t.copied : t.copyLink}
+            <button onClick={copyToClipboard} className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-xl transition-colors">
+              {copied ? <><Check className="w-5 h-5" />{t.copied}</> : <><Copy className="w-5 h-5" />{t.copyLink}</>}
             </button>
-
             <div className="mt-8 pt-8 border-t border-white/10">
               <div className="flex items-center justify-center gap-2 text-cyan-400 mb-2">
                 <Eye className="w-5 h-5" />
                 <span>{t.waitingResponse}</span>
               </div>
-              <p className="text-slate-500 text-sm">
-                {t.step3Title}
-              </p>
+              <p className="text-slate-500 text-sm">{t.step3Title}</p>
             </div>
           </div>
         </div>
-      </div>
+      </HeaderWrapper>
     );
   }
 
   // Friend View
   if (view === 'friend') {
     return (
-      <div className="min-h-screen bg-dark-950 py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-cyan-400 mb-4">
-              <Users className="w-4 h-4" />
-              <span>Friend View</span>
-            </div>
-            <h1 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-purple-300 via-white to-cyan-300 bg-clip-text text-transparent">
-              {t.friendTitle}
-            </h1>
-            <p className="text-slate-400 text-lg">{t.friendPrompt}</p>
+      <HeaderWrapper>
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-cyan-400 mb-4">
+            <Users className="w-4 h-4" />
+            <span>Friend View</span>
           </div>
-
-          <div className="glass rounded-3xl p-8 mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="font-serif text-xl text-white">{t.step1Title}</h2>
-              <span className="text-sm text-slate-400">
-                {friendTags?.length || 0}/5 {t.selected}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {PERSONALITY_TAGS.map(tag => {
-                const isSelected = friendTags?.includes(tag.id);
-                return (
-                  <button
-                    key={tag.id}
-                    onClick={() => {
-                      if (isSelected) {
-                        setFriendTags((friendTags || []).filter(t => t !== tag.id));
-                      } else if ((friendTags?.length || 0) < 5) {
-                        setFriendTags([...(friendTags || []), tag.id]);
-                      }
-                    }}
-                    className={`
-                      relative p-4 rounded-xl border transition-all duration-200 text-left
-                      ${isSelected
-                        ? 'bg-cyan-500/20 border-cyan-500 text-white'
-                        : 'bg-dark-800/50 border-white/10 text-slate-300 hover:border-cyan-500/50 hover:bg-dark-700/50'
-                      }
-                    `}
-                  >
-                    <span className="text-2xl mb-2 block">{tag.emoji}</span>
-                    <span className="font-medium block">{locale === 'zh-TW' ? tag.zh : tag.en}</span>
-                    {isSelected && (
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-cyan-500 rounded-full flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="mt-8 text-center">
-              <button
-                onClick={submitFriendResponse}
-                disabled={(friendTags?.length !== 5) || isSubmitting}
-                className={`
-                  inline-flex items-center gap-3 px-8 py-4 rounded-xl font-medium
-                  transition-all duration-300
-                  ${friendTags?.length === 5
-                    ? 'bg-gradient-to-r from-cyan-600 via-cyan-500 to-purple-500 text-white hover:shadow-lg hover:shadow-cyan-500/30'
-                    : 'bg-dark-700 text-slate-500 cursor-not-allowed'
-                  }
-                `}
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="animate-spin">⟳</span>
-                    {t.submitting}
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="w-5 h-5" />
-                    {t.submitFriend}
-                  </>
-                )}
-              </button>
-            </div>
+          <h1 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-purple-300 via-white to-cyan-300 bg-clip-text text-transparent">{t.friendTitle}</h1>
+          <p className="text-slate-400 text-lg">{t.friendPrompt}</p>
+        </div>
+        <div className="glass rounded-3xl p-8 mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="font-serif text-xl text-white">{t.step1Title}</h2>
+            <span className="text-sm text-slate-400">{friendTags?.length || 0}/5 {t.selected}</span>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {PERSONALITY_TAGS.map(tag => {
+              const isSelected = friendTags?.includes(tag.id);
+              return (
+                <button
+                  key={tag.id}
+                  onClick={() => {
+                    if (isSelected) {
+                      setFriendTags((friendTags || []).filter(t => t !== tag.id));
+                    } else if ((friendTags?.length || 0) < 5) {
+                      setFriendTags([...(friendTags || []), tag.id]);
+                    }
+                  }}
+                  className={`relative p-4 rounded-xl border transition-all duration-200 text-left ${isSelected ? 'bg-cyan-500/20 border-cyan-500 text-white' : 'bg-dark-800/50 border-white/10 text-slate-300 hover:border-cyan-500/50 hover:bg-dark-700/50'}`}
+                >
+                  <span className="text-2xl mb-2 block">{tag.emoji}</span>
+                  <span className="font-medium block">{locale === 'zh-TW' ? tag.zh : tag.en}</span>
+                  {isSelected && (
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-cyan-500 rounded-full flex items-center justify-center">
+                      <Check className="w-4 h-4 text-white" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <div className="mt-8 text-center">
+            <button
+              onClick={submitFriendResponse}
+              disabled={(friendTags?.length !== 5) || isSubmitting}
+              className={`inline-flex items-center gap-3 px-8 py-4 rounded-xl font-medium transition-all duration-300 ${friendTags?.length === 5 ? 'bg-gradient-to-r from-cyan-600 via-cyan-500 to-purple-500 text-white hover:shadow-lg hover:shadow-cyan-500/30' : 'bg-dark-700 text-slate-500 cursor-not-allowed'}`}
+            >
+              {isSubmitting ? <><span className="animate-spin">⟳</span>{t.submitting}</> : <><Sparkles className="w-5 h-5" />{t.submitFriend}</>}
+            </button>
           </div>
         </div>
-      </div>
+      </HeaderWrapper>
     );
   }
 
   // Results View
+  const TagBadge = ({ id }: { id: string }) => {
+    const tag = getTagById(id);
+    return tag ? (
+      <span className="px-3 py-1.5 bg-purple-500/20 text-purple-300 rounded-lg text-sm">
+        {tag.emoji} {getLabel(tag)}
+      </span>
+    ) : null;
+  };
+
   return (
-    <div className="min-h-screen bg-dark-950 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-purple-300 via-white to-cyan-300 bg-clip-text text-transparent">
-            {t.title}
-          </h1>
-          <p className="text-slate-400">{t.step3Title}</p>
-        </div>
+    <HeaderWrapper>
+      <div className="text-center mb-12">
+        <h1 className="font-serif text-4xl md:text-5xl mb-4 bg-gradient-to-r from-purple-300 via-white to-cyan-300 bg-clip-text text-transparent">{t.title}</h1>
+        <p className="text-slate-400">{t.step3Title}</p>
+      </div>
 
-        {/* 2x2 Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Open Self */}
-          <div className="glass rounded-2xl p-6 border-2 border-purple-500/30">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
-                <Eye className="w-5 h-5 text-purple-400" />
-              </div>
-              <div>
-                <h3 className="font-serif text-xl text-white">{t.quadrantOpen}</h3>
-                <p className="text-xs text-slate-500">{t.quadrantOpenDesc}</p>
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="glass rounded-2xl p-6 border-2 border-purple-500/30">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-purple-500/20 rounded-xl flex items-center justify-center">
+              <Eye className="w-5 h-5 text-purple-400" />
             </div>
-            <div className="flex flex-wrap gap-2">
-              {bothSelected.length > 0 ? bothSelected.map(id => {
-                const tag = getTagById(id);
-                return tag ? (
-                  <span key={id} className="px-3 py-1.5 bg-purple-500/20 text-purple-300 rounded-lg text-sm">
-                    {tag.emoji} {getLabel(tag)}
-                  </span>
-                ) : null;
-              }) : (
-                <span className="text-slate-500 text-sm">—</span>
-              )}
+            <div>
+              <h3 className="font-serif text-xl text-white">{t.quadrantOpen}</h3>
+              <p className="text-xs text-slate-500">{t.quadrantOpenDesc}</p>
             </div>
           </div>
-
-          {/* Blind Self */}
-          <div className="glass rounded-2xl p-6 border-2 border-cyan-500/30">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center">
-                <EyeOff className="w-5 h-5 text-cyan-400" />
-              </div>
-              <div>
-                <h3 className="font-serif text-xl text-white">{t.quadrantBlind}</h3>
-                <p className="text-xs text-slate-500">{t.quadrantBlindDesc}</p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {onlyFriendSelected.length > 0 ? onlyFriendSelected.map(id => {
-                const tag = getTagById(id);
-                return tag ? (
-                  <span key={id} className="px-3 py-1.5 bg-cyan-500/20 text-cyan-300 rounded-lg text-sm">
-                    {tag.emoji} {getLabel(tag)}
-                  </span>
-                ) : null;
-              }) : (
-                <span className="text-slate-500 text-sm">—</span>
-              )}
-            </div>
-          </div>
-
-          {/* Hidden Self */}
-          <div className="glass rounded-2xl p-6 border-2 border-amber-500/30">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
-                <EyeOff className="w-5 h-5 text-amber-400" />
-              </div>
-              <div>
-                <h3 className="font-serif text-xl text-white">{t.quadrantHidden}</h3>
-                <p className="text-xs text-slate-500">{t.quadrantHiddenDesc}</p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {onlyUserSelected.length > 0 ? onlyUserSelected.map(id => {
-                const tag = getTagById(id);
-                return tag ? (
-                  <span key={id} className="px-3 py-1.5 bg-amber-500/20 text-amber-300 rounded-lg text-sm">
-                    {tag.emoji} {getLabel(tag)}
-                  </span>
-                ) : null;
-              }) : (
-                <span className="text-slate-500 text-sm">—</span>
-              )}
-            </div>
-          </div>
-
-          {/* Unknown Self */}
-          <div className="glass rounded-2xl p-6 border-2 border-emerald-500/30">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center">
-                <HelpCircle className="w-5 h-5 text-emerald-400" />
-              </div>
-              <div>
-                <h3 className="font-serif text-xl text-white">{t.quadrantUnknown}</h3>
-                <p className="text-xs text-slate-500">{t.quadrantUnknownDesc}</p>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {neitherSelected.length > 0 ? neitherSelected.map(id => {
-                const tag = getTagById(id);
-                return tag ? (
-                  <span key={id} className="px-3 py-1.5 bg-emerald-500/20 text-emerald-300 rounded-lg text-sm">
-                    {tag.emoji} {getLabel(tag)}
-                  </span>
-                ) : null;
-              }) : (
-                <span className="text-slate-500 text-sm">—</span>
-              )}
-            </div>
+          <div className="flex flex-wrap gap-2">
+            {bothSelected.length > 0 ? bothSelected.map(id => <TagBadge key={id} id={id} />) : <span className="text-slate-500 text-sm">—</span>}
           </div>
         </div>
 
-        {/* Actions */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href={`/${locale}/johari`}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-dark-800 hover:bg-dark-700 text-slate-300 rounded-xl transition-colors"
-          >
-            {t.retake}
-          </Link>
-          <Link
-            href={`/${locale}`}
-            className="inline-flex items-center gap-2 px-6 py-3 text-slate-400 hover:text-white transition-colors"
-          >
-            {t.backHome}
-          </Link>
+        <div className="glass rounded-2xl p-6 border-2 border-cyan-500/30">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center">
+              <EyeOff className="w-5 h-5 text-cyan-400" />
+            </div>
+            <div>
+              <h3 className="font-serif text-xl text-white">{t.quadrantBlind}</h3>
+              <p className="text-xs text-slate-500">{t.quadrantBlindDesc}</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {onlyFriendSelected.length > 0 ? onlyFriendSelected.map(id => <span key={id} className="px-3 py-1.5 bg-cyan-500/20 text-cyan-300 rounded-lg text-sm">{getTagById(id)?.emoji} {getLabel(getTagById(id)!)}</span>) : <span className="text-slate-500 text-sm">—</span>}
+          </div>
+        </div>
+
+        <div className="glass rounded-2xl p-6 border-2 border-amber-500/30">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-amber-500/20 rounded-xl flex items-center justify-center">
+              <EyeOff className="w-5 h-5 text-amber-400" />
+            </div>
+            <div>
+              <h3 className="font-serif text-xl text-white">{t.quadrantHidden}</h3>
+              <p className="text-xs text-slate-500">{t.quadrantHiddenDesc}</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {onlyUserSelected.length > 0 ? onlyUserSelected.map(id => <span key={id} className="px-3 py-1.5 bg-amber-500/20 text-amber-300 rounded-lg text-sm">{getTagById(id)?.emoji} {getLabel(getTagById(id)!)}</span>) : <span className="text-slate-500 text-sm">—</span>}
+          </div>
+        </div>
+
+        <div className="glass rounded-2xl p-6 border-2 border-emerald-500/30">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+              <HelpCircle className="w-5 h-5 text-emerald-400" />
+            </div>
+            <div>
+              <h3 className="font-serif text-xl text-white">{t.quadrantUnknown}</h3>
+              <p className="text-xs text-slate-500">{t.quadrantUnknownDesc}</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {neitherSelected.length > 0 ? neitherSelected.map(id => <span key={id} className="px-3 py-1.5 bg-emerald-500/20 text-emerald-300 rounded-lg text-sm">{getTagById(id)?.emoji} {getLabel(getTagById(id)!)}</span>) : <span className="text-slate-500 text-sm">—</span>}
+          </div>
         </div>
       </div>
-    </div>
+
+      <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Link href={`/${locale}/johari`} className="inline-flex items-center gap-2 px-6 py-3 bg-dark-800 hover:bg-dark-700 text-slate-300 rounded-xl transition-colors">
+          {t.retake}
+        </Link>
+        <Link href={`/${locale}`} className="inline-flex items-center gap-2 px-6 py-3 text-slate-400 hover:text-white transition-colors">
+          {t.backHome}
+        </Link>
+      </div>
+    </HeaderWrapper>
   );
 }
