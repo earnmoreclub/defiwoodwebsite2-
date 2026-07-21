@@ -1,0 +1,131 @@
+{
+  "common": {
+    "siteName": "Awareness Be",
+    "est": "Est. 2026",
+    "skipToContent": "Skip to main content"
+  },
+  "nav": {
+    "philosophy": "Philosophy",
+    "articles": "Articles",
+    "consultations": "Consultations",
+    "about": "About",
+    "bookSession": "Book Session"
+  },
+  "hero": {
+    "badge": "EST. 2026 · HOLISTIC HEALTH & METABOLIC WELLNESS",
+    "headline": "Cultivate Clarity. Restore Balance. Science-Backed Wellness for Modern Living.",
+    "subheadline": "Awareness Be bridges evidence-based metabolic health, gut resilience, and conscious living to help you thrive from the inside out.",
+    "primaryCta": "Schedule 1-on-1 Consultation",
+    "secondaryCta": "Explore Insights",
+    "socialProof": "Trusted by 5,000+ individuals seeking evidence-based vitality."
+  },
+  "pillars": {
+    "title": "Our Focus Areas",
+    "subtitle": "Three pillars to support your wellbeing",
+    "items": {
+      "metabolic": {
+        "title": "Metabolic & Gut Vitality",
+        "description": "Rebalance your core biometrics through tailored nutrition protocols, biome optimization, and metabolic tracking."
+      },
+      "stress": {
+        "title": "Stress Resilience & Sleep",
+        "description": "Master your nervous system with clinical breathwork frameworks and circadian rhythm alignment."
+      },
+      "consultations": {
+        "title": "Personalized Wellness Consultations",
+        "description": "Direct access to expert guidance, actionable biometrics analysis, and custom supplement blueprints."
+      }
+    }
+  },
+  "blog": {
+    "sectionTitle": "Insights & Editorial",
+    "sectionSubtitle": "The Journal",
+    "viewAll": "View All Articles",
+    "pageTitle": "Insights for Modern Wellness",
+    "pageSubtitle": "Evidence-based articles on metabolic health, gut resilience, and conscious living — written to inform and empower your wellness journey.",
+    "categoryAll": "All",
+    "categories": {
+      "metabolic": "Metabolic Health",
+      "gut": "Gut Biome",
+      "hair": "Hair & Longevity",
+      "mindfulness": "Mindfulness"
+    },
+    "sidebar": {
+      "trendingTitle": "Trending in Wellness",
+      "trendingSubtitle": "Most read this week",
+      "newsletterTitle": "The Awareness Letter",
+      "newsletterDescription": "Weekly evidence-based insights delivered to your inbox. Curated by humans, powered by research, free forever.",
+      "newsletterCta": "Get Weekly Insights"
+    },
+    "article": {
+      "readingTime": "min read",
+      "minRead": "min",
+      "backToArticles": "Back to Articles",
+      "relatedTitle": "Continue Reading",
+      "notFound": "Article Not Found",
+      "notFoundDescription": "This article may have been removed or the link is incorrect."
+    }
+  },
+  "booking": {
+    "sectionId": "book",
+    "header": "Begin Your Wellness Journey",
+    "subtext": "Select a date and time for your initial 45-minute holistic health intake consultation.",
+    "formTitle": "Book a Consultation",
+    "formDescription": "Fill in your details and we'll confirm your appointment within 24 hours.",
+    "calTitle": "Select a Time",
+    "calDescription": "Pick a slot that works best for you from the calendar below.",
+    "fallbackTitle": "Or fill out the form",
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email Address",
+      "emailPlaceholder": "[email protected]",
+      "goals": "Primary Health Goals",
+      "goalsPlaceholder": "e.g. better sleep, gut balance, more energy...",
+      "preferredTime": "Preferred Time",
+      "preferredTimePlaceholder": "e.g. Tuesday afternoons, weekend mornings",
+      "submit": "Submit Booking Request",
+      "submitting": "Submitting...",
+      "successTitle": "Thank you for booking!",
+      "successDescription": "We've received your request and will confirm your appointment within 24 hours via email.",
+      "errorMessage": "Booking failed. Please try again or email us directly."
+    }
+  },
+  "footer": {
+    "tagline": "Science as the warp, mindfulness as the weft.",
+    "madeWith": "Made with",
+    "madeFor": "for holistic wellness",
+    "explore": "Explore",
+    "connect": "Connect",
+    "companyLinks": {
+      "philosophy": "Philosophy",
+      "articles": "Articles",
+      "consultations": "Consultations",
+      "about": "About"
+    },
+    "contactLinks": {
+      "instagram": "Instagram",
+      "email": "Email",
+      "press": "Press"
+    },
+    "copyright": "© 2026 Awareness Be. All rights reserved.",
+    "disclaimer": "The information provided on Awareness Be is for educational purposes only and does not substitute professional medical advice. Always consult a qualified healthcare provider for medical concerns."
+  },
+  "about": {
+    "story": "Our Story",
+    "headline": "Born from a belief that wellness should be accessible, evidence-based, and deeply human.",
+    "p1": "Awareness Be was founded in 2026 on a simple premise: the modern wellness industry has lost its way. Too much noise, too little evidence, too many quick fixes and not enough depth.",
+    "p2": "We exist to bridge the gap between cutting-edge metabolic science and ancient wisdom — between gut resilience and mindful living, between personalized data and intuitive practice.",
+    "p3": "Every article we publish, every consultation we offer, every product we recommend passes through the same filter: is this evidence-backed? Is this aligned with holistic health? Would this serve someone we love?",
+    "quote": "\"We don't sell miracles. We cultivate clarity, restore balance, and provide the tools for evidence-based wellness that lasts.\""
+  },
+  "errors": {
+    "notFoundTitle": "Page Not Found",
+    "notFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to Home"
+  },
+  "language": {
+    "switchTo": "繁體中文",
+    "current": "English"
+  }
+}

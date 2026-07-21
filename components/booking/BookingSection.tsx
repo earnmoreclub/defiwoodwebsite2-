@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Shield, CheckCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   HEALTH_GOALS_OPTIONS,
   PREFERRED_TIME_OPTIONS,
@@ -10,7 +11,14 @@ import {
 } from '@/lib/calcom';
 import type { BookingFormData } from '@/types';
 
-export default function BookingSection() {
+interface BookingSectionProps {
+  locale: string;
+}
+
+export default function BookingSection({ locale: _locale }: BookingSectionProps) {
+  const t = useTranslations('booking');
+  const tForm = useTranslations('booking.form');
+
   const [formData, setFormData] = useState<BookingFormData>({
     name: '',
     email: '',
@@ -32,7 +40,7 @@ export default function BookingSection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const validationErrors = validateBookingForm(formData);
     if (validationErrors.length > 0) {
       setErrors(validationErrors);
@@ -57,10 +65,10 @@ export default function BookingSection() {
           message: '',
         });
       } else {
-        setErrors(['Something went wrong. Please try again.']);
+        setErrors([tForm('errorMessage')]);
       }
-    } catch (error) {
-      setErrors(['Network error. Please try again.']);
+    } catch {
+      setErrors([tForm('errorMessage')]);
     } finally {
       setSubmitting(false);
     }
@@ -69,7 +77,6 @@ export default function BookingSection() {
   return (
     <section id="book" className="py-24 bg-cream-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -78,20 +85,17 @@ export default function BookingSection() {
           className="text-center mb-12"
         >
           <span className="text-xs uppercase tracking-editorial text-amber-500 mb-4 block">
-            Begin Your Journey
+            {t('formTitle')}
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl text-stone-900 mb-4">
-            Begin Your Wellness Journey
+            {t('header')}
           </h2>
           <p className="text-stone-600 max-w-2xl mx-auto leading-relaxed">
-            Select a date and time for your initial 45-minute holistic health 
-            intake consultation. Our team will review your goals and craft a 
-            personalized path forward.
+            {t('subtext')}
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-12">
-          {/* Booking Form */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -106,30 +110,28 @@ export default function BookingSection() {
                     <CheckCircle className="w-8 h-8 text-forest-700" />
                   </div>
                   <h3 className="font-serif text-2xl text-stone-900 mb-3">
-                    Request Received
+                    {tForm('successTitle')}
                   </h3>
                   <p className="text-stone-600 mb-6 max-w-md mx-auto">
-                    Thank you for choosing Awareness Be. We'll reach out within 
-                    24 hours to confirm your consultation details.
+                    {tForm('successDescription')}
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
                     className="text-forest-800 hover:text-forest-700 text-sm underline"
                   >
-                    Submit another request
+                    {tForm('submit')}
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <h3 className="font-serif text-xl text-stone-900 mb-6">
-                    Request Your Consultation
+                    {t('formTitle')}
                   </h3>
 
-                  {/* Name & Email */}
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="name" className="block text-xs uppercase tracking-editorial text-stone-600 mb-2">
-                        Full Name *
+                        {tForm('name')} *
                       </label>
                       <input
                         id="name"
@@ -139,12 +141,12 @@ export default function BookingSection() {
                         value={formData.name}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-stone-200 bg-cream-50 focus:outline-none focus:border-forest-400 transition-colors text-sm"
-                        placeholder="Your name"
+                        placeholder={tForm('namePlaceholder')}
                       />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-xs uppercase tracking-editorial text-stone-600 mb-2">
-                        Email *
+                        {tForm('email')} *
                       </label>
                       <input
                         id="email"
@@ -154,15 +156,14 @@ export default function BookingSection() {
                         value={formData.email}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-stone-200 bg-cream-50 focus:outline-none focus:border-forest-400 transition-colors text-sm"
-                        placeholder="your@email.com"
+                        placeholder={tForm('emailPlaceholder')}
                       />
                     </div>
                   </div>
 
-                  {/* Health Goals */}
                   <div>
                     <label htmlFor="primaryHealthGoals" className="block text-xs uppercase tracking-editorial text-stone-600 mb-2">
-                      Primary Health Goals *
+                      {tForm('goals')} *
                     </label>
                     <select
                       id="primaryHealthGoals"
@@ -172,17 +173,16 @@ export default function BookingSection() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-stone-200 bg-cream-50 focus:outline-none focus:border-forest-400 transition-colors text-sm"
                     >
-                      <option value="">Select your primary focus</option>
+                      <option value="">{tForm('goalsPlaceholder')}</option>
                       {HEALTH_GOALS_OPTIONS.map(goal => (
                         <option key={goal} value={goal}>{goal}</option>
                       ))}
                     </select>
                   </div>
 
-                  {/* Preferred Time */}
                   <div>
                     <label htmlFor="preferredTime" className="block text-xs uppercase tracking-editorial text-stone-600 mb-2">
-                      Preferred Time *
+                      {tForm('preferredTime')} *
                     </label>
                     <select
                       id="preferredTime"
@@ -192,17 +192,16 @@ export default function BookingSection() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-stone-200 bg-cream-50 focus:outline-none focus:border-forest-400 transition-colors text-sm"
                     >
-                      <option value="">Select preferred time</option>
+                      <option value="">{tForm('preferredTimePlaceholder')}</option>
                       {PREFERRED_TIME_OPTIONS.map(time => (
                         <option key={time} value={time}>{time}</option>
                       ))}
                     </select>
                   </div>
 
-                  {/* Message */}
                   <div>
                     <label htmlFor="message" className="block text-xs uppercase tracking-editorial text-stone-600 mb-2">
-                      Additional Notes
+                      Message
                     </label>
                     <textarea
                       id="message"
@@ -211,11 +210,10 @@ export default function BookingSection() {
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-stone-200 bg-cream-50 focus:outline-none focus:border-forest-400 transition-colors text-sm resize-none"
-                      placeholder="Anything else you'd like us to know..."
+                      placeholder="..."
                     />
                   </div>
 
-                  {/* Errors */}
                   {errors.length > 0 && (
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                       {errors.map((err, i) => (
@@ -224,25 +222,18 @@ export default function BookingSection() {
                     </div>
                   )}
 
-                  {/* Submit */}
                   <button
                     type="submit"
                     disabled={submitting}
                     className="w-full px-8 py-4 bg-forest-800 text-cream-50 text-sm uppercase tracking-editorial font-medium hover:bg-forest-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
-                    {submitting ? 'Sending...' : 'Request Consultation'}
+                    {submitting ? tForm('submitting') : tForm('submit')}
                   </button>
-
-                  <p className="text-xs text-stone-500 text-center">
-                    By submitting, you agree to receive a confirmation email. 
-                    We respect your privacy.
-                  </p>
                 </form>
               )}
             </div>
           </motion.div>
 
-          {/* Sidebar Info */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -250,71 +241,27 @@ export default function BookingSection() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-2 space-y-6"
           >
-            <div className="bg-white border border-stone-200 rounded-2xl p-8">
-              <h3 className="font-serif text-xl text-stone-900 mb-6">
-                What to Expect
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-forest-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-forest-700" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-stone-900 text-sm">45 Minutes</h4>
-                    <p className="text-xs text-stone-600 mt-1">
-                      Comprehensive intake and goal setting
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-5 h-5 text-amber-700" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-stone-900 text-sm">1-on-1 Virtual</h4>
-                    <p className="text-xs text-stone-600 mt-1">
-                      Via secure video call from anywhere
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-forest-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Shield className="w-5 h-5 text-forest-700" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-stone-900 text-sm">100% Confidential</h4>
-                    <p className="text-xs text-stone-600 mt-1">
-                      Your information stays private and secure
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Cal.com Embed Placeholder */}
             <div className="bg-gradient-to-br from-forest-50 to-amber-50 border border-stone-200 rounded-2xl p-8 text-center">
               <p className="text-xs uppercase tracking-editorial text-amber-600 mb-3">
-                Or Book Directly
+                {t('calTitle')}
               </p>
               <h3 className="font-serif text-lg text-stone-900 mb-3">
-                Real-time Calendar
+                {t('calDescription')}
               </h3>
-              <p className="text-sm text-stone-600 mb-4 leading-relaxed">
-                Connect directly with our Cal.com scheduler to see real-time availability 
-                and book your preferred slot instantly.
-              </p>
               <a
-                href="https://cal.com/awareness-be"
+                href={process.env.NEXT_PUBLIC_CALCOM_URL || 'https://cal.com/awareness-be'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 bg-forest-800 text-cream-50 text-xs uppercase tracking-editorial hover:bg-forest-700 transition-colors"
               >
                 <Calendar className="w-4 h-4 mr-2" />
-                Open Cal.com
+                {t('formTitle')}
               </a>
-              <p className="text-xs text-stone-500 mt-4">
-                Configure NEXT_PUBLIC_CALCOM_URL to enable
-              </p>
+            </div>
+
+            <div className="bg-white border border-stone-200 rounded-2xl p-8">
+              <Clock className="w-8 h-8 text-forest-700 mb-4" />
+              <Shield className="w-8 h-8 text-amber-600 mb-4 ml-2" />
             </div>
           </motion.div>
         </div>

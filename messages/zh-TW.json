@@ -1,0 +1,131 @@
+{
+  "common": {
+    "siteName": "Awareness Be",
+    "est": "創立於 2026",
+    "skipToContent": "跳至主要內容"
+  },
+  "nav": {
+    "philosophy": "品牌理念",
+    "articles": "健康文章",
+    "consultations": "預約諮詢",
+    "about": "關於我們",
+    "bookSession": "立即預約"
+  },
+  "hero": {
+    "badge": "EST. 2026 · 全方位健康與代謝調理",
+    "headline": "培養清明。重拾平衡。為現代生活而設的科學健康之道。",
+    "subheadline": "Awareness Be 以嚴謹的代謝科學、腸道韌性與正念生活為根基，幫助您由內而外綻放生命力。",
+    "primaryCta": "預約一對一諮詢",
+    "secondaryCta": "探索健康洞察",
+    "socialProof": "已獲超過 5,000 位追求循證健康的個體信賴"
+  },
+  "pillars": {
+    "title": "服務領域",
+    "subtitle": "三大支柱，全面守護您的健康",
+    "items": {
+      "metabolic": {
+        "title": "代謝與腸道活力",
+        "description": "透過量身打造的營養方案、菌相優化與代謝追蹤，重塑您的核心生物指標。"
+      },
+      "stress": {
+        "title": "壓力韌性與睡眠",
+        "description": "以臨床呼吸法框架與晝夜節律校準，掌握自主神經系統的調節之道。"
+      },
+      "consultations": {
+        "title": "個人化健康諮詢",
+        "description": "直接獲得專業指導、可執行的生物指標分析，以及客製化的營養補充計畫。"
+      }
+    }
+  },
+  "blog": {
+    "sectionTitle": "洞見與編輯精選",
+    "sectionSubtitle": "健康期刊",
+    "viewAll": "瀏覽所有文章",
+    "pageTitle": "健康洞察專欄",
+    "pageSubtitle": "嚴謹循證、深入淺出的代謝健康、腸道韌性與正念生活文章，引領您的健康旅程。",
+    "categoryAll": "全部",
+    "categories": {
+      "metabolic": "代謝健康",
+      "gut": "腸道菌相",
+      "hair": "髮肌與長壽",
+      "mindfulness": "正念生活"
+    },
+    "sidebar": {
+      "trendingTitle": "熱門健康話題",
+      "trendingSubtitle": "本週最多人閱讀",
+      "newsletterTitle": "Awareness 週報",
+      "newsletterDescription": "每週將嚴謹的健康洞察送到您的信箱，永久免費。",
+      "newsletterCta": "訂閱週報"
+    },
+    "article": {
+      "readingTime": "分鐘閱讀",
+      "minRead": "分鐘",
+      "backToArticles": "返回文章列表",
+      "relatedTitle": "延伸閱讀",
+      "notFound": "找不到此文章",
+      "notFoundDescription": "此文章可能已刪除或連結錯誤。"
+    }
+  },
+  "booking": {
+    "sectionId": "book",
+    "header": "開啟您的健康旅程",
+    "subtext": "請選擇您方便的時段，預約首次 45 分鐘的全方位健康諮詢。",
+    "formTitle": "預約諮詢",
+    "formDescription": "填寫您的資料，我們將在 24 小時內與您聯繫確認諮詢時間。",
+    "calTitle": "選擇時段",
+    "calDescription": "透過下方日曆直接挑選最適合您的時段。",
+    "fallbackTitle": "或填寫以下表單",
+    "form": {
+      "name": "姓名",
+      "namePlaceholder": "您的全名",
+      "email": "電子郵件",
+      "emailPlaceholder": "[email protected]",
+      "goals": "主要健康目標",
+      "goalsPlaceholder": "例如：改善睡眠、調整腸道、提升活力⋯⋯",
+      "preferredTime": "偏好時段",
+      "preferredTimePlaceholder": "例如：週二下午、週末上午",
+      "submit": "送出預約申請",
+      "submitting": "送出中...",
+      "successTitle": "感謝您的預約！",
+      "successDescription": "我們已收到您的申請，將在 24 小時內透過電子郵件與您確認時段。",
+      "errorMessage": "預約申請失敗，請稍後再試或直接來信。"
+    }
+  },
+  "footer": {
+    "tagline": "以科學為經，以正念為緯。",
+    "madeWith": "滿懷",
+    "madeFor": "為整體健康而打造",
+    "explore": "探索",
+    "connect": "聯繫我們",
+    "companyLinks": {
+      "philosophy": "品牌理念",
+      "articles": "健康文章",
+      "consultations": "預約諮詢",
+      "about": "關於我們"
+    },
+    "contactLinks": {
+      "instagram": "Instagram",
+      "email": "電子郵件",
+      "press": "媒體公關"
+    },
+    "copyright": "© 2026 Awareness Be. 版權所有。",
+    "disclaimer": "本網站提供的資訊僅供教育用途，不能取代專業醫療建議。如有健康疑慮請諮詢合格的醫療專業人員。"
+  },
+  "about": {
+    "story": "品牌故事",
+    "headline": "源自一個信念：健康應該是平易近人、循證且深具人性光輝的。",
+    "p1": "Awareness Be 創立於 2026 年，源於一個簡單的初衷：現代健康產業已迷失方向。太多的噪音、太少的證據、太快的速效解方，卻缺少足夠的深度。",
+    "p2": "我們的存在，是為了搭建最尖端的代謝科學與古老智慧之間的橋樑——在腸道韌性與正念生活之間，在個人化數據與直觀實踐之間。",
+    "p3": "我們發表的每一篇文章、提供的每一次諮詢、推薦的每一項產品，都經過同一個篩選標準：是否有證據支持？是否與整體健康一致？是否對我們所關愛的人有益？",
+    "quote": "我們不販售奇蹟，我們培養清明、重拾平衡，提供能持久的循證健康之道。"
+  },
+  "errors": {
+    "notFoundTitle": "找不到頁面",
+    "notFoundDescription": "您要找的頁面不存在或已被移除。",
+    "backHome": "返回首頁"
+  },
+  "language": {
+    "switchTo": "English",
+    "current": "繁體中文"
+  }
+}

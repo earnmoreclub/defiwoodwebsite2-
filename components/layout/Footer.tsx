@@ -1,8 +1,17 @@
-import Link from 'next/link';
-import { Heart, Mail, MapPin, Phone } from 'lucide-react';
+'use client';
 
-export default function Footer() {
-  const currentYear = new Date().getFullYear();
+import Link from 'next/link';
+import { Heart, Mail } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
+interface FooterProps {
+  locale: string;
+}
+
+export default function Footer({ locale }: FooterProps) {
+  const t = useTranslations('footer');
+
+  const basePath = locale === 'zh-TW' ? '' : '/en';
 
   return (
     <footer className="bg-forest-800 text-cream-50">
@@ -12,40 +21,39 @@ export default function Footer() {
           <div className="md:col-span-2">
             <h2 className="font-serif text-3xl mb-4">Awareness Be</h2>
             <p className="text-cream-100/80 text-sm leading-relaxed max-w-md mb-6">
-              Bridging evidence-based metabolic health, gut resilience, and conscious 
-              living to help you thrive from the inside out. Est. 2026.
+              {t('tagline')}
             </p>
             <div className="flex items-center space-x-2 text-cream-100/60 text-xs">
-              <span>Made with</span>
+              <span>{t('madeWith')}</span>
               <Heart className="w-3 h-3 text-amber-300" />
-              <span>for holistic wellness</span>
+              <span>{t('madeFor')}</span>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
             <h3 className="text-xs uppercase tracking-editorial mb-6 text-cream-100/60">
-              Explore
+              {t('explore')}
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/#philosophy" className="text-sm text-cream-100/80 hover:text-cream-50 transition-colors">
-                  Philosophy
+                <Link href={`${basePath}/#philosophy`} className="text-sm text-cream-100/80 hover:text-cream-50 transition-colors">
+                  {t('companyLinks.philosophy')}
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-sm text-cream-100/80 hover:text-cream-50 transition-colors">
-                  Articles
+                <Link href={`${basePath}/blog`} className="text-sm text-cream-100/80 hover:text-cream-50 transition-colors">
+                  {t('companyLinks.articles')}
                 </Link>
               </li>
               <li>
-                <Link href="/#book" className="text-sm text-cream-100/80 hover:text-cream-50 transition-colors">
-                  Consultations
+                <Link href={`${basePath}/#book`} className="text-sm text-cream-100/80 hover:text-cream-50 transition-colors">
+                  {t('companyLinks.consultations')}
                 </Link>
               </li>
               <li>
-                <Link href="/#about" className="text-sm text-cream-100/80 hover:text-cream-50 transition-colors">
-                  About Us
+                <Link href={`${basePath}/#about`} className="text-sm text-cream-100/80 hover:text-cream-50 transition-colors">
+                  {t('companyLinks.about')}
                 </Link>
               </li>
             </ul>
@@ -54,16 +62,19 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h3 className="text-xs uppercase tracking-editorial mb-6 text-cream-100/60">
-              Connect
+              {t('connect')}
             </h3>
             <ul className="space-y-3">
               <li className="flex items-center space-x-2 text-sm text-cream-100/80">
                 <Mail className="w-4 h-4 text-amber-300" />
-                <span>hello@awarenessbe.com</span>
+                <a href="mailto:hello@awarenessbe.com" className="hover:text-cream-50 transition-colors">
+                  hello@awarenessbe.com
+                </a>
               </li>
               <li className="flex items-center space-x-2 text-sm text-cream-100/80">
-                <Phone className="w-4 h-4 text-amber-300" />
-                <span>Schedule via booking</span>
+                <Link href={`${basePath}/#book`} className="hover:text-cream-50 transition-colors">
+                  {t('companyLinks.consultations')}
+                </Link>
               </li>
             </ul>
           </div>
@@ -73,12 +84,10 @@ export default function Footer() {
         <div className="mt-16 pt-8 border-t border-cream-100/10">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-xs text-cream-100/50">
-              © {currentYear} Awareness Be. All rights reserved.
+              {t('copyright')}
             </p>
             <p className="text-xs text-cream-100/40 text-center md:text-right max-w-xl">
-              The information provided on Awareness Be is for educational purposes only 
-              and does not substitute professional medical advice. Always consult with 
-              a qualified healthcare provider before making any health-related decisions.
+              {t('disclaimer')}
             </p>
           </div>
         </div>

@@ -3,8 +3,31 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Calendar, BookOpen, Users } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-export default function Hero() {
+interface HeroProps {
+  locale: string;
+}
+
+const heroIcons = [
+  { label: { 'zh-TW': '代謝健康', 'en': 'Metabolic Health' }, bgClass: 'bg-forest-100', textClass: 'text-forest-700', icon: 'heart' },
+  { label: { 'zh-TW': '腸道韌性', 'en': 'Gut Resilience' }, bgClass: 'bg-amber-100', textClass: 'text-amber-600', icon: 'sun' },
+  { label: { 'zh-TW': '睡眠優化', 'en': 'Sleep Optimization' }, bgClass: 'bg-amber-100', textClass: 'text-amber-600', icon: 'moon' },
+  { label: { 'zh-TW': '長壽科學', 'en': 'Longevity' }, bgClass: 'bg-forest-100', textClass: 'text-forest-700', icon: 'shield' },
+];
+
+const iconPaths: Record<string, string> = {
+  heart: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
+  sun: 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z',
+  moon: 'M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z',
+  shield: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+};
+
+export default function Hero({ locale }: HeroProps) {
+  const t = useTranslations('hero');
+  const basePath = locale === 'zh-TW' ? '' : '/en';
+  const labelLocale = locale === 'zh-TW' ? 'zh-TW' : 'en';
+
   return (
     <section className="relative min-h-[90vh] flex items-center bg-cream-50 overflow-hidden">
       {/* Background Pattern */}
@@ -31,7 +54,7 @@ export default function Hero() {
               className="inline-flex items-center px-4 py-2 bg-forest-800/5 rounded-full mb-8"
             >
               <span className="text-xs uppercase tracking-editorial text-forest-800">
-                Est. 2026 • Holistic Health & Metabolic Wellness
+                {t('badge')}
               </span>
             </motion.div>
 
@@ -42,10 +65,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="font-serif text-4xl sm:text-5xl lg:text-6xl text-stone-900 leading-[1.1] mb-6"
             >
-              Cultivate Clarity.{' '}
-              <span className="text-forest-800">Restore Balance.</span>
-              <br />
-              Science-Backed Wellness for Modern Living.
+              {t('headline')}
             </motion.h1>
 
             {/* Subheadline */}
@@ -55,8 +75,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-lg text-stone-600 leading-relaxed mb-10 max-w-xl"
             >
-              Awareness Be bridges evidence-based metabolic health, gut resilience, 
-              and conscious living to help you thrive from the inside out.
+              {t('subheadline')}
             </motion.p>
 
             {/* CTAs */}
@@ -67,18 +86,18 @@ export default function Hero() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Link
-                href="/#book"
+                href={`${basePath}/#book`}
                 className="inline-flex items-center justify-center px-8 py-4 bg-forest-800 text-cream-50 text-sm uppercase tracking-editorial font-medium hover:bg-forest-700 transition-all duration-300 group"
               >
                 <Calendar className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                Schedule 1-on-1 Consultation
+                {t('primaryCta')}
               </Link>
               <Link
-                href="/blog"
+                href={`${basePath}/blog`}
                 className="inline-flex items-center justify-center px-8 py-4 border border-stone-300 text-stone-800 text-sm uppercase tracking-editorial font-medium hover:border-forest-800 hover:text-forest-800 transition-all duration-300 group"
               >
                 <BookOpen className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform" />
-                Explore Insights
+                {t('secondaryCta')}
               </Link>
             </motion.div>
 
@@ -100,8 +119,7 @@ export default function Hero() {
                 ))}
               </div>
               <p className="text-sm text-stone-600">
-                Trusted by <span className="font-medium text-forest-800">5,000+</span> individuals 
-                seeking evidence-based vitality
+                {t('socialProof')}
               </p>
             </motion.div>
           </motion.div>
@@ -115,44 +133,20 @@ export default function Hero() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-forest-100/50 to-amber-100/30 rounded-3xl transform rotate-3" />
             <div className="relative bg-gradient-to-br from-forest-50 to-amber-50/50 rounded-3xl p-12 aspect-[4/5] flex flex-col justify-center">
-              {/* Decorative Elements */}
               <div className="absolute top-8 right-8 w-24 h-24 border border-forest-200 rounded-full" />
               <div className="absolute bottom-12 left-8 w-32 h-32 border border-amber-200 rounded-full" />
               
-              {/* Icon Grid */}
               <div className="grid grid-cols-2 gap-8">
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-forest-100 rounded-2xl flex items-center justify-center">
-                    <svg className="w-8 h-8 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
+                {heroIcons.map((item, i) => (
+                  <div key={i} className="text-center">
+                    <div className={`w-16 h-16 mx-auto mb-4 ${item.bgClass} rounded-2xl flex items-center justify-center`}>
+                      <svg className={`w-8 h-8 ${item.textClass}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={iconPaths[item.icon]} />
+                      </svg>
+                    </div>
+                    <p className={`text-xs uppercase tracking-editorial ${item.textClass}`}>{item.label[labelLocale]}</p>
                   </div>
-                  <p className="text-xs uppercase tracking-editorial text-forest-700">Metabolic Health</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-2xl flex items-center justify-center">
-                    <svg className="w-8 h-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                  </div>
-                  <p className="text-xs uppercase tracking-editorial text-amber-700">Gut Resilience</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-amber-100 rounded-2xl flex items-center justify-center">
-                    <svg className="w-8 h-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                  </div>
-                  <p className="text-xs uppercase tracking-editorial text-amber-700">Sleep Optimization</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-forest-100 rounded-2xl flex items-center justify-center">
-                    <svg className="w-8 h-8 text-forest-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                  </div>
-                  <p className="text-xs uppercase tracking-editorial text-forest-700">Longevity</p>
-                </div>
+                ))}
               </div>
             </div>
           </motion.div>

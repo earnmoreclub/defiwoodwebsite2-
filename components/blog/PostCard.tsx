@@ -2,17 +2,27 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Clock, User } from 'lucide-react';
 import type { Article } from '@/types';
+import { getTranslations } from 'next-intl/server';
 
 interface PostCardProps {
   article: Article;
   variant?: 'featured' | 'standard' | 'compact';
+  locale: string;
 }
 
-export default function PostCard({ article, variant = 'standard' }: PostCardProps) {
+async function PostCard({
+  article,
+  variant = 'standard',
+  locale,
+}: PostCardProps) {
+  const t = await getTranslations({ locale, namespace: 'blog' });
+  const basePath = locale === 'zh-TW' ? '' : '/en';
+  const dateLocale = locale === 'zh-TW' ? 'zh-TW' : 'en-US';
+
   if (variant === 'featured') {
     return (
       <article className="group">
-        <Link href={`/blog/${article.slug}`} className="block">
+        <Link href={`${basePath}/blog/${article.slug}`} className="block">
           <div className="relative aspect-[16/10] bg-gradient-to-br from-forest-100 to-amber-50 rounded-2xl overflow-hidden mb-6">
             {article.coverImage ? (
               <Image
@@ -44,10 +54,10 @@ export default function PostCard({ article, variant = 'standard' }: PostCardProp
               </span>
               <span className="flex items-center">
                 <Clock className="w-3 h-3 mr-1.5" />
-                {article.readingTime} min read
+                {article.readingTime} {t('article.minRead')}
               </span>
               <time dateTime={article.publishedAt}>
-                {new Date(article.publishedAt).toLocaleDateString('en-US', {
+                {new Date(article.publishedAt).toLocaleDateString(dateLocale, {
                   month: 'short',
                   day: 'numeric',
                   year: 'numeric',
@@ -59,9 +69,7 @@ export default function PostCard({ article, variant = 'standard' }: PostCardProp
               {article.title}
             </h2>
 
-            <p className="text-stone-600 leading-relaxed">
-              {article.excerpt}
-            </p>
+            <p className="text-stone-600 leading-relaxed">{article.excerpt}</p>
           </div>
         </Link>
       </article>
@@ -71,7 +79,7 @@ export default function PostCard({ article, variant = 'standard' }: PostCardProp
   if (variant === 'compact') {
     return (
       <article className="group pb-6 border-b border-stone-200 last:border-0">
-        <Link href={`/blog/${article.slug}`} className="flex space-x-4">
+        <Link href={`${basePath}/blog/${article.slug}`} className="flex space-x-4">
           <div className="flex-shrink-0 w-20 h-20 bg-gradient-to-br from-forest-100 to-amber-50 rounded-lg overflow-hidden">
             {article.coverImage ? (
               <Image
@@ -97,7 +105,7 @@ export default function PostCard({ article, variant = 'standard' }: PostCardProp
               {article.title}
             </h3>
             <span className="text-xs text-stone-500 mt-2 block">
-              {article.readingTime} min read
+              {article.readingTime} {t('article.minRead')}
             </span>
           </div>
         </Link>
@@ -105,10 +113,9 @@ export default function PostCard({ article, variant = 'standard' }: PostCardProp
     );
   }
 
-  // Standard variant
   return (
     <article className="group">
-      <Link href={`/blog/${article.slug}`} className="block">
+      <Link href={`${basePath}/blog/${article.slug}`} className="block">
         <div className="relative aspect-[4/3] bg-gradient-to-br from-forest-100 to-amber-50 rounded-xl overflow-hidden mb-4">
           {article.coverImage ? (
             <Image
@@ -138,10 +145,10 @@ export default function PostCard({ article, variant = 'standard' }: PostCardProp
             {article.excerpt}
           </p>
           <div className="flex items-center space-x-3 text-xs text-stone-500">
-            <span>{article.readingTime} min read</span>
+            <span>{article.readingTime} {t('article.minRead')}</span>
             <span>·</span>
             <time dateTime={article.publishedAt}>
-              {new Date(article.publishedAt).toLocaleDateString('en-US', {
+              {new Date(article.publishedAt).toLocaleDateString(dateLocale, {
                 month: 'short',
                 day: 'numeric',
               })}
@@ -152,3 +159,5 @@ export default function PostCard({ article, variant = 'standard' }: PostCardProp
     </article>
   );
 }
+
+export default PostCard;

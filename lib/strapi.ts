@@ -68,10 +68,10 @@ function transformArticle(item: StrapiArticle): Article {
     excerpt: attrs.excerpt,
     content: attrs.contentMarkdown || attrs.content,
     contentMarkdown: attrs.contentMarkdown,
-    coverImage: attrs.coverImage?.data?.attributes?.url 
+    coverImage: attrs.coverImage?.data?.attributes?.url
       ? `${STRAPI_URL}${attrs.coverImage.data.attributes.url}`
       : undefined,
-    category: attrs.category?.data 
+    category: attrs.category?.data
       ? {
           id: String(attrs.category.data.id),
           name: attrs.category.data.attributes.name,
@@ -101,7 +101,7 @@ async function fetchStrapi<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const url = `${STRAPI_URL}/api/${endpoint}`;
-  
+
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...(STRAPI_TOKEN && { Authorization: `Bearer ${STRAPI_TOKEN}` }),
@@ -126,12 +126,14 @@ export async function getArticles(params?: {
   page?: number;
   pageSize?: number;
   category?: string;
+  locale?: string;
 }): Promise<{ articles: Article[]; total: number }> {
   const queryParams = new URLSearchParams();
   if (params?.page) queryParams.set('pagination[page]', String(params.page));
   if (params?.pageSize) queryParams.set('pagination[pageSize]', String(params.pageSize));
   if (params?.category) queryParams.set('filters[category][slug][$eq]', params.category);
-  
+  if (params?.locale) queryParams.set('locale', params.locale);
+
   queryParams.set('populate[0]', 'coverImage');
   queryParams.set('populate[1]', 'category');
   queryParams.set('populate[2]', 'tags');
@@ -149,9 +151,10 @@ export async function getArticles(params?: {
 }
 
 // Get single article by slug
-export async function getArticleBySlug(slug: string): Promise<Article | null> {
+export async function getArticleBySlug(slug: string, locale?: string): Promise<Article | null> {
   const queryParams = new URLSearchParams();
   queryParams.set('filters[slug][$eq]', slug);
+  if (locale) queryParams.set('locale', locale);
   queryParams.set('populate[0]', 'coverImage');
   queryParams.set('populate[1]', 'category');
   queryParams.set('populate[2]', 'tags');
@@ -166,10 +169,14 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 }
 
 // Get all categories
-export async function getCategories(): Promise<Category[]> {
+export async function getCategories(locale?: string): Promise<Category[]> {
+  const queryParams = new URLSearchParams();
+  if (locale) queryParams.set('locale', locale);
+  queryParams.set('sort', 'name:asc');
+
   const response = await fetchStrapi<{
     data: Array<{ id: number; attributes: { name: string; slug: string; description?: string } }>;
-  }>('categories?sort=name:asc');
+  }>(`categories?${queryParams.toString()}`);
 
   return response.data.map(cat => ({
     id: String(cat.id),
@@ -210,9 +217,10 @@ export async function createArticle(article: {
 }
 
 // Get featured article (most recent)
-export async function getFeaturedArticle(): Promise<Article | null> {
+export async function getFeaturedArticle(locale?: string): Promise<Article | null> {
   const queryParams = new URLSearchParams();
   queryParams.set('pagination[pageSize]', '1');
+  if (locale) queryParams.set('locale', locale);
   queryParams.set('populate[0]', 'coverImage');
   queryParams.set('populate[1]', 'category');
   queryParams.set('populate[2]', 'author.avatar');
@@ -227,9 +235,10 @@ export async function getFeaturedArticle(): Promise<Article | null> {
 }
 
 // Get trending articles (excluding featured)
-export async function getTrendingArticles(limit: number = 4): Promise<Article[]> {
+export async function getTrendingArticles(limit: number = 4, locale?: string): Promise<Article[]> {
   const queryParams = new URLSearchParams();
-  queryParams.set('pagination[pageSize]', String(limit + 1)); // +1 to account for featured
+  queryParams.set('pagination[pageSize]', String(limit + 1));
+  if (locale) queryParams.set('locale', locale);
   queryParams.set('populate[0]', 'coverImage');
   queryParams.set('populate[1]', 'category');
   queryParams.set('populate[2]', 'author.avatar');
