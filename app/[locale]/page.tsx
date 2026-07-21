@@ -1,6 +1,4 @@
 import { setRequestLocale } from 'next-intl/server';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
 import Hero from '@/components/landing/Hero';
 import Pillars from '@/components/landing/Pillars';
 import BookingSection from '@/components/booking/BookingSection';
@@ -24,8 +22,6 @@ export default async function HomePage({ params }: Props) {
         <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
 
-      <Navbar locale={locale} />
-
       <main className="flex-1 relative z-10">
         <Hero locale={locale} />
         <MBTISection locale={locale} />
@@ -33,8 +29,6 @@ export default async function HomePage({ params }: Props) {
         <BookingSection locale={locale} />
         <AboutSection locale={locale} />
       </main>
-
-      <Footer locale={locale} />
     </div>
   );
 }
