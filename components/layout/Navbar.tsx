@@ -77,6 +77,12 @@ export default function Navbar({ locale, userLevel = 1, userXp = 0 }: NavbarProp
             >
               {t('about')}
             </Link>
+            <Link
+              href={locale === 'zh-TW' ? '/tests' : '/en/tests'}
+              className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
+            >
+              {t('tests')}
+            </Link>
             
             {/* Language Switcher */}
             <LanguageToggle currentLocale={locale} />
@@ -147,6 +153,13 @@ export default function Navbar({ locale, userLevel = 1, userXp = 0 }: NavbarProp
                   className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
                 >
                   {t('about')}
+                </Link>
+                <Link
+                  href={locale === 'zh-TW' ? '/tests' : '/en/tests'}
+                  onClick={() => setIsOpen(false)}
+                  className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
+                >
+                  {t('tests')}
                 </Link>
                 <Link
                   href={getLocalizedPath(switchLocale)}
