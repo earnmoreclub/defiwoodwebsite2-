@@ -4,6 +4,8 @@ import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, RotateCcw, Share2, Sparkles, Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
+import GameHeader from '@/components/layout/GameHeader';
 
 type AxisKey = 'e' | 's' | 't' | 'j';
 type Answer = 'a' | 'b';
@@ -36,6 +38,8 @@ const AXIS_LETTERS: Record<AxisKey, { first: string; second: string }> = {
 type Stage = 'intro' | 'testing' | 'result';
 
 export default function MBTITest() {
+  const params = useParams();
+  const locale = (params.locale as string) || 'en';
   const t = useTranslations('mbti');
   const [stage, setStage] = useState<Stage>('intro');
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -115,7 +119,10 @@ export default function MBTITest() {
   const selectedAnswer = answers[currentQuestion?.id];
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <div className="min-h-screen bg-dark-950 flex flex-col">
+      <GameHeader title="MBTI Test" />
+      <main className="flex-1 pt-24 pb-12 px-4">
+        <div className="w-full max-w-3xl mx-auto">
       <AnimatePresence mode="wait">
         {stage === 'intro' && (
           <motion.div
@@ -362,6 +369,8 @@ export default function MBTITest() {
           </motion.div>
         )}
       </AnimatePresence>
+        </div>
+      </main>
     </div>
   );
 }
