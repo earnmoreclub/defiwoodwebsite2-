@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import LanguageToggle from '@/src/components/LanguageToggle';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 
@@ -13,6 +14,7 @@ export default function GameHeader({ title }: GameHeaderProps) {
   const params = useParams();
   const locale = (params.locale as string) || 'en';
   const sessionId = params.sessionId as string | undefined;
+  const t = useTranslations('common.game');
 
   // Preserve current path (e.g., for johari session share links)
   const gameBasePath = sessionId ? `/johari/${sessionId}` : '/johari';
@@ -31,9 +33,9 @@ export default function GameHeader({ title }: GameHeaderProps) {
               </div>
               <h1 className="font-display text-xl tracking-tight text-white group-hover:text-purple-300 transition-colors">
                 <span className="hidden sm:inline">
-                  {locale === 'zh-TW' ? '內在探索' : 'Self-Discovery'}
+                  {t('siteTitle')}
                 </span>
-                <span className="sm:hidden">S-D</span>
+                <span className="sm:hidden">{t('siteTitleShort')}</span>
               </h1>
             </div>
           </Link>
@@ -50,7 +52,7 @@ export default function GameHeader({ title }: GameHeaderProps) {
               className="flex items-center gap-1.5 text-xs uppercase tracking-editorial text-slate-400 hover:text-white transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">{locale === 'zh-TW' ? '重新開始' : 'Restart'}</span>
+              <span className="hidden sm:inline">{t('restart')}</span>
             </Link>
             <LanguageToggle currentLocale={locale} />
           </div>

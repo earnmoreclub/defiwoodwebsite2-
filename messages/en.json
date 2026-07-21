@@ -2,7 +2,14 @@
   "common": {
     "siteName": "Awareness Be",
     "est": "Est. 2026",
-    "skipToContent": "Skip to main content"
+    "skipToContent": "Skip to main content",
+    "game": {
+      "siteTitle": "Self-Discovery",
+      "siteTitleShort": "S-D",
+      "restart": "Restart",
+      "johariTitle": "Johari Window",
+      "mbtiTitle": "MBTI Test"
+    }
   },
   "nav": {
     "philosophy": "Philosophy",
@@ -277,5 +284,75 @@
     "communication": "Communication Style",
     "strengths": "Key Strengths",
     "values": "What You Value"
+  },
+  "tests": {
+    "badge": "Interactive Tools",
+    "title": "Self-Discovery Tests",
+    "subtitle": "Explore your personality, health, and self-awareness through our interactive assessments",
+    "startTest": "Start Test",
+    "comingSoon": {
+      "tag": "Coming Soon"
+    },
+    "cards": {
+      "bone-spur": {
+        "tag": "Health",
+        "title": "Bone Spur & Joint Health",
+        "desc": "Evaluate your joint pain symptoms and get personalized recommendations for bone and joint health."
+      },
+      "mbti": {
+        "tag": "Personality",
+        "title": "MBTI Personality Type",
+        "desc": "Discover your 16 personality types and understand how you process information and make decisions."
+      },
+      "johari": {
+        "tag": "Self-Awareness",
+        "title": "Johari Window",
+        "desc": "Explore your self-awareness through feedback from others. Understand your open, blind, hidden, and unknown self."
+      },
+      "more": {
+        "title": "More Tests Coming Soon",
+        "desc": "We're working on adding more interactive assessments to help you on your journey of self-discovery."
+      }
+    }
+  },
+  "boneSpur": {
+    "title": "Bone Spur & Joint Health Screener",
+    "subtitle": "Interactive symptom evaluation and health recommendations",
+    "welcome": "Welcome! I am your Joint Health Assistant. Please choose your preferred language or tell me about your symptoms.",
+    "welcomeZh": "歡迎！我是您的關節健康評估助手。請選擇您的語言，或直接告訴我您的不適症狀。",
+    "symptomLocation": "Where is your pain or discomfort located?",
+    "symptomLocationZh": "請告訴我最主要的不適部位是哪裡？",
+    "painSeverity": "On a scale of 1-10, how severe is your pain?",
+    "painSeverityZh": "請以 1-10 分評估您的疼痛程度（10 為最嚴重）：",
+    "duration": "How long have you experienced this pain?",
+    "durationZh": "這種疼痛持續了多久？",
+    "morningStiffness": "Do you experience morning stiffness lasting more than 30 minutes?",
+    "morningStiffnessZh": "您是否出現晨間僵硬超過 30 分鐘的情況？",
+    "dailyImpact": "Has this affected your daily activities (walking, lifting, range of motion)?",
+    "dailyImpactZh": "這是否影響了您的日常活動（行走、提重物、關節活動度）？",
+    "redFlags": "Have you experienced any of the following: numbness, tingling, radiating pain, muscle weakness, or loss of bowel/bladder control?",
+    "redFlagsZh": "您是否有以下症狀：手腳麻痺、針刺感、放射性疼痛、肌肉無力，或大小便失禁？",
+    "tier1": {
+      "title": "Urgent - Seek Immediate Care",
+      "titleZh": "緊急 - 請立即就醫",
+      "recommendation": "Based on your symptoms, we strongly recommend seeking immediate medical attention. Your symptoms suggest possible nerve compression (radiculopathy or myelopathy) that requires prompt evaluation by a specialist.",
+      "recommendationZh": "根據您的症狀，我們強烈建議您立即就醫。您的症狀顯示可能存在神經壓迫（神經根病變或脊髓病變），需要專科醫師立即評估。"
+    },
+    "tier2": {
+      "title": "Highly Recommended - Book a Consultation",
+      "titleZh": "建議預約門診",
+      "recommendation": "Your symptoms suggest you would benefit from a professional evaluation. We recommend scheduling a consultation for a detailed assessment, which may include imaging (X-rays/MRI) to evaluate bone spur (osteophyte) formation and its impact on joints and nerves.",
+      "recommendationZh": "您的症狀顯示建議進行專業評估。我們建議預約門診進行詳細檢查，可能包括 X 光或核磁共振檢查，以評估骨刺（骨質增生）情況及其對關節和神經的影響。"
+    },
+    "tier3": {
+      "title": "Monitor & Self-Care",
+      "titleZh": "居家觀察與保健",
+      "recommendation": "Your symptoms appear mild. We recommend self-care measures: rest, gentle stretching, ice/heat therapy. Monitor your symptoms and consider booking a consultation if pain persists beyond 2-3 weeks.",
+      "recommendationZh": "您的症狀看起來較輕微。建議居家保健：休息、適度拉伸、冰敷/熱敷。若疼痛持續超過 2-3 週，請考慮預約門診。"
+    },
+    "disclaimer": "Disclaimer: This tool is for educational and screening purposes only and does not constitute a formal medical diagnosis or treatment. If you are experiencing a medical emergency, please seek urgent care.",
+    "disclaimerZh": "免責聲明：本評估工具僅供健康諮詢與初步篩檢參考，不可作為正式醫療診斷或治療依據。若您出現緊急身體不適，請立即前往醫院急診就醫。",
+    "restart": "Start Over",
+    "bookConsultation": "Book a Consultation"
   }
 }

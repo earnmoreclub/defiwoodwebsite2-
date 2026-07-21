@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Quote, Sparkles } from 'lucide-react';
+import PexelsImage from '@/src/components/PexelsImage';
 
 interface AboutSectionProps {
   locale: string;
@@ -18,7 +19,7 @@ export default function AboutSection({ locale: _locale }: AboutSectionProps) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -37,10 +38,35 @@ export default function AboutSection({ locale: _locale }: AboutSectionProps) {
           </h2>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent mx-auto mb-12" />
 
-          <div className="space-y-6 text-slate-300 leading-relaxed max-w-2xl mx-auto text-left sm:text-center">
+          <div className="space-y-6 text-slate-300 leading-relaxed max-w-2xl mx-auto text-left sm:text-center mb-16">
             <p>{t('p1')}</p>
             <p>{t('p2')}</p>
             <p>{t('p3')}</p>
+          </div>
+
+          {/* Image gallery */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
+            <PexelsImage
+              category="nature"
+              width={400}
+              height={300}
+              rounded="2xl"
+              className="aspect-[4/3] w-full"
+            />
+            <PexelsImage
+              category="meditation"
+              width={400}
+              height={300}
+              rounded="2xl"
+              className="aspect-[4/3] w-full"
+            />
+            <PexelsImage
+              category="wellness"
+              width={400}
+              height={300}
+              rounded="2xl"
+              className="aspect-[4/3] w-full"
+            />
           </div>
 
           {/* Quote card */}
@@ -49,7 +75,7 @@ export default function AboutSection({ locale: _locale }: AboutSectionProps) {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-16 relative glass-strong rounded-3xl p-8 md:p-12"
+            className="relative glass-strong rounded-3xl p-8 md:p-12"
           >
             <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/30">
               <Quote className="w-5 h-5 text-white" />

@@ -184,7 +184,7 @@ export default function JohariWindow() {
 
   const HeaderWrapper = ({ children }: { children: React.ReactNode }) => (
     <div className="min-h-screen bg-dark-950 flex flex-col">
-      <GameHeader title="Johari Window" />
+      <GameHeader title={t.title} />
       <main className="flex-1 pt-24 pb-12 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {children}

@@ -41,6 +41,7 @@ export default function MBTITest() {
   const params = useParams();
   const locale = (params.locale as string) || 'en';
   const t = useTranslations('mbti');
+  const tg = useTranslations('common.game');
   const [stage, setStage] = useState<Stage>('intro');
   const [currentIdx, setCurrentIdx] = useState(0);
   // answers stores questionId -> 'a' | 'b'
@@ -120,7 +121,7 @@ export default function MBTITest() {
 
   return (
     <div className="min-h-screen bg-dark-950 flex flex-col">
-      <GameHeader title="MBTI Test" />
+      <GameHeader title={tg('mbtiTitle')} />
       <main className="flex-1 pt-24 pb-12 px-4">
         <div className="w-full max-w-3xl mx-auto">
       <AnimatePresence mode="wait">

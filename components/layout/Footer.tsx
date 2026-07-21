@@ -55,12 +55,6 @@ export default function Footer({ locale }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link href={`${basePath}/blog`} className="text-sm text-slate-400 hover:text-white transition-colors inline-flex items-center group">
-                  <span className="w-0 group-hover:w-2 h-px bg-purple-400 mr-0 group-hover:mr-2 transition-all duration-300" />
-                  {t('companyLinks.articles')}
-                </Link>
-              </li>
-              <li>
                 <Link href={`${basePath}/#book`} className="text-sm text-slate-400 hover:text-white transition-colors inline-flex items-center group">
                   <span className="w-0 group-hover:w-2 h-px bg-purple-400 mr-0 group-hover:mr-2 transition-all duration-300" />
                   {t('companyLinks.consultations')}

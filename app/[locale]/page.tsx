@@ -4,7 +4,6 @@ import Footer from '@/components/layout/Footer';
 import Hero from '@/components/landing/Hero';
 import Pillars from '@/components/landing/Pillars';
 import BookingSection from '@/components/booking/BookingSection';
-import EditorialFeed from '@/components/blog/EditorialFeed';
 import AboutSection from '@/components/landing/AboutSection';
 import MBTISection from '@/components/landing/MBTISection';
 
@@ -31,7 +30,6 @@ export default async function HomePage({ params }: Props) {
         <Hero locale={locale} />
         <MBTISection locale={locale} />
         <Pillars locale={locale} />
-        <EditorialFeed locale={locale} />
         <BookingSection locale={locale} />
         <AboutSection locale={locale} />
       </main>

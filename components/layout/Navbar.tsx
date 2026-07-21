@@ -66,12 +66,6 @@ export default function Navbar({ locale, userLevel = 1, userXp = 0 }: NavbarProp
               {t('philosophy')}
             </Link>
             <Link
-              href={locale === 'zh-TW' ? '/blog' : '/en/blog'}
-              className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
-            >
-              {t('articles')}
-            </Link>
-            <Link
               href={locale === 'zh-TW' ? '/#book' : '/en#book'}
               className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
             >
@@ -139,13 +133,6 @@ export default function Navbar({ locale, userLevel = 1, userXp = 0 }: NavbarProp
                   className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
                 >
                   {t('philosophy')}
-                </Link>
-                <Link
-                  href={locale === 'zh-TW' ? '/blog' : '/en/blog'}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
-                >
-                  {t('articles')}
                 </Link>
                 <Link
                   href={locale === 'zh-TW' ? '/#book' : '/en#book'}

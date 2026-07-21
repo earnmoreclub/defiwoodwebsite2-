@@ -148,14 +148,6 @@ export default function Hero({ locale }: HeroProps) {
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Link>
-              <Link
-                href={`${basePath}/blog`}
-                className="group inline-flex items-center justify-center px-8 py-4 glass text-white text-sm uppercase tracking-editorial font-medium rounded-xl transition-all duration-300 hover:bg-white/10 hover:scale-105"
-              >
-                <BookOpen className="w-4 h-4 mr-2" />
-                {t('secondaryCta')}
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Link>
             </motion.div>
 
             {/* Social Proof */}
