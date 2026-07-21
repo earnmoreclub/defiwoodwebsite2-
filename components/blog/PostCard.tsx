@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Clock, User, ArrowUpRight } from 'lucide-react';
 import type { Article } from '@/types';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
 interface PostCardProps {
   article: Article;
@@ -10,12 +10,12 @@ interface PostCardProps {
   locale: string;
 }
 
-async function PostCard({
+function PostCard({
   article,
   variant = 'standard',
   locale,
 }: PostCardProps) {
-  const t = await getTranslations({ locale, namespace: 'blog' });
+  const t = useTranslations('blog');
   const basePath = locale === 'zh-TW' ? '' : '/en';
   const dateLocale = locale === 'zh-TW' ? 'zh-TW' : 'en-US';
 
