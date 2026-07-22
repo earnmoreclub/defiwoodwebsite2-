@@ -1,13 +1,53 @@
 import { setRequestLocale } from 'next-intl/server';
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import MBTIResult from '@/components/mbti/MBTIResult';
+
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://awarenessbe.com';
 
 type Props = {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ type?: string }>;
 };
+
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const sp = await searchParams;
+  const type = sp.type ?? 'INTJ';
+  const title = locale === 'zh' ? `${type} — 你的 MBTI 腦型` : `${type} — Your MBTI Brain Type`;
+  const description =
+    locale === 'zh'
+      ? `探索你的 MBTI 腦型：認知風格、壓力應對與具身優勢。透過科學測驗發現你的獨特心智模式。`
+      : `Discover your MBTI brain type: cognitive style, stress response, and embodied strengths. Uncover your unique mental patterns through evidence-based assessment.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      images: [
+        {
+          url: `${BASE_URL}/api/og?title=${encodeURIComponent(type)}&description=${encodeURIComponent(description)}&type=mbti-result&lang=${locale}`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [
+        `${BASE_URL}/api/og?title=${encodeURIComponent(type)}&type=mbti-result&lang=${locale}`,
+      ],
+    },
+  };
+}
 
 export default async function MBTIResultPage({ params, searchParams }: Props) {
   const { locale } = await params;
@@ -32,7 +72,7 @@ export default async function MBTIResultPage({ params, searchParams }: Props) {
 
       <main className="flex-1 relative z-10 pt-32 pb-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Suspense fallback={<div className="text-slate-400">Loading\u2026</div>}>
+          <Suspense fallback={<div className="text-slate-400">Loading…</div>}>
             <MBTIResult initialType={validType} />
           </Suspense>
         </div>
