@@ -297,21 +297,21 @@ export default function PhilosophyExperience({ locale }: { locale: string }) {
   return (
     <Shell locale={locale}>
       <CartProvider>
-        <div className="min-h-screen bg-cream-50 text-charcoal font-sans">
+        <div className="min-h-screen bg-cream-50 text-charcoal font-sans" style={{ backgroundColor: '#FDFBF7' }}>
           <PhilosophyHeader ctaSlot={<CartButton />} />
           <main>
             <PhilosophyHero scrollTo="#check-in" />
-            <section id="check-in" className="py-24 md:py-32 bg-cream-100">
+            <section id="check-in" className="py-24 md:py-32" style={{ backgroundColor: '#F5F2EB' }}>
               <div className="max-w-5xl mx-auto px-6">
                 <RitualsWizard />
               </div>
             </section>
-            <section className="py-24 md:py-32 bg-cream-50">
+            <section className="py-24 md:py-32" style={{ backgroundColor: '#FDFBF7' }}>
               <div className="max-w-5xl mx-auto px-6">
                 <BreathingTool />
               </div>
             </section>
-            <section className="py-24 md:py-32 bg-cream-100">
+            <section className="py-24 md:py-32" style={{ backgroundColor: '#F5F2EB' }}>
               <div className="max-w-6xl mx-auto px-6">
                 <SituationalCards />
               </div>
