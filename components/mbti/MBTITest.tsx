@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, RotateCcw, Share2, Sparkles, Check } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import GameHeader from '@/components/layout/GameHeader';
 
 type AxisKey = 'e' | 's' | 't' | 'j';
@@ -85,12 +86,19 @@ export default function MBTITest() {
   }, [scores]);
 
   const axisPercentages = useMemo(() => {
-    return (Object.keys(scores) as AxisKey[]).map((axis) => {
+    const map: Record<AxisKey, { first: number; second: number }> = {
+      e: { first: 50, second: 50 },
+      s: { first: 50, second: 50 },
+      t: { first: 50, second: 50 },
+      j: { first: 50, second: 50 },
+    };
+    (Object.keys(scores) as AxisKey[]).forEach((axis) => {
       const s = scores[axis];
       const total = s.first + s.second;
       const pct = total === 0 ? 50 : Math.round((s.first / total) * 100);
-      return { axis, firstPct: pct, secondPct: 100 - pct };
+      map[axis] = { first: pct, second: 100 - pct };
     });
+    return map;
   }, [scores]);
 
   const handleSelect = useCallback((ans: Answer) => {
@@ -104,6 +112,20 @@ export default function MBTITest() {
       setStage('result');
     }
   }, [currentIdx, total]);
+
+  // Persist results and route to the shareable result page once complete.
+  useEffect(() => {
+    if (stage !== 'result') return;
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.setItem(
+        'mbti:lastResult',
+        JSON.stringify({ type: resultType, axisPercentages })
+      );
+    } catch {
+      /* noop */
+    }
+  }, [stage, resultType, axisPercentages]);
 
   const goPrev = useCallback(() => {
     if (currentIdx > 0) {
@@ -280,8 +302,9 @@ export default function MBTITest() {
 
             {/* Trait Bars */}
             <div className="space-y-6 mb-10">
-              {axisPercentages.map(({ axis, firstPct, secondPct }) => {
+              {(Object.keys(axisPercentages) as AxisKey[]).map((axis) => {
                 const letters = AXIS_LETTERS[axis];
+                const { first: firstPct, second: secondPct } = axisPercentages[axis];
                 const traitKey =
                   axis === 'e'
                     ? 'ei'
@@ -343,9 +366,16 @@ export default function MBTITest() {
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                href={`/${locale}/mbti/result?type=${resultType}`}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-300 text-dark-950 text-sm font-medium rounded-xl hover:shadow-lg hover:shadow-amber-500/25 transition-all duration-300"
+              >
+                <Share2 className="w-4 h-4" />
+                {t('viewShareCard')}
+              </Link>
               <button
                 onClick={retake}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-cyan-600 text-white text-sm font-medium rounded-xl hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-dark-800 border border-white/10 text-white text-sm font-medium rounded-xl hover:bg-dark-700 transition-colors"
               >
                 <RotateCcw className="w-4 h-4" />
                 {t('retake')}

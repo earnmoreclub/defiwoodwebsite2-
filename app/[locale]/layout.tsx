@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import LeadMagnetModal from '@/components/lead-magnet/LeadMagnetModal';
 import '../globals.css';
 
 type Props = {
@@ -45,6 +46,8 @@ export default async function LocaleLayout({ children, params }: Props) {
           <Navbar locale={locale} />
           {children}
           <Footer locale={locale} />
+          {/* Lead Magnet: exit-intent + 50% scroll triggers, 14-day dismiss */}
+          <LeadMagnetModal />
         </NextIntlClientProvider>
       </body>
     </html>
