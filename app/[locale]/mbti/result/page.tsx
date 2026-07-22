@@ -5,8 +5,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import MBTIResult from '@/components/mbti/MBTIResult';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://awarenessbe.com';
-
 type Props = {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ type?: string }>;
@@ -25,27 +23,6 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      images: [
-        {
-          url: `${BASE_URL}/api/og?title=${encodeURIComponent(type)}&description=${encodeURIComponent(description)}&type=mbti-result&lang=${locale}`,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: [
-        `${BASE_URL}/api/og?title=${encodeURIComponent(type)}&type=mbti-result&lang=${locale}`,
-      ],
-    },
   };
 }
 

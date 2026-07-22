@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { OrganizationSchema } from '@/components/seo/StructuredData';
 
 // Root layout - actual layout lives in [locale]/layout.tsx
 // This file must exist for Next.js App Router
@@ -13,10 +12,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <OrganizationSchema />
-      {children}
-    </>
-  );
+  return children;
 }
