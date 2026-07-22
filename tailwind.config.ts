@@ -17,6 +17,22 @@ const config: Config = {
           700: '#1c1929',
           600: '#252136',
         },
+        cream: {
+          50: '#FDFBF7',
+          100: '#F7F2EA',
+          200: '#E7E1D8',
+        },
+        clay: '#E7E1D8',
+        sage: {
+          DEFAULT: '#78866B',
+          50: '#F2F4EE',
+          100: '#E2E6D9',
+          200: '#C5CCB5',
+          500: '#78866B',
+          600: '#5F6C54',
+          700: '#475140',
+        },
+        charcoal: '#1C1917',
         purple: {
           500: '#a855f7',
           400: '#c084fc',
@@ -60,6 +76,7 @@ const config: Config = {
         'scale-in': 'scaleIn 0.4s ease-out forwards',
         'glow-pulse': 'glowPulse 3s ease-in-out infinite',
         'float': 'float 6s ease-in-out infinite',
+        'breathe': 'breathe 16s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -85,6 +102,12 @@ const config: Config = {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-20px)' },
+        },
+        breathe: {
+          '0%, 100%': { transform: 'scale(0.6)', opacity: '0.55' },
+          '25%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1)', opacity: '1' },
+          '75%': { transform: 'scale(0.6)', opacity: '0.55' },
         },
       },
       backgroundImage: {
