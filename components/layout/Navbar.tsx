@@ -72,28 +72,28 @@ export default function Navbar({ locale, userLevel = 1, userXp = 0 }: NavbarProp
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link
-              href={locale === 'zh-TW' ? '/#philosophy' : '/en#philosophy'}
-              className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
-            >
-              {t('philosophy')}
-            </Link>
-            <Link
-              href={locale === 'zh-TW' ? '/#book' : '/en#book'}
-              className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
-            >
-              {t('consultations')}
-            </Link>
-            <Link
               href={locale === 'zh-TW' ? '/#about' : '/en#about'}
               className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
             >
               {t('about')}
             </Link>
             <Link
+              href={locale === 'zh-TW' ? '/#philosophy' : '/en#philosophy'}
+              className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
+            >
+              {t('philosophy')}
+            </Link>
+            <Link
               href={locale === 'zh-TW' ? '/tests' : '/en/tests'}
               className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
             >
-              {t('tests')}
+              {t('diagnose')}
+            </Link>
+            <Link
+              href={locale === 'zh-TW' ? '/#book' : '/en#book'}
+              className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors duration-200"
+            >
+              {t('consultations')}
             </Link>
             
             {/* Language Switcher */}
@@ -146,20 +146,6 @@ export default function Navbar({ locale, userLevel = 1, userXp = 0 }: NavbarProp
             >
               <div className="p-6 flex flex-col space-y-4">
                 <Link
-                  href={locale === 'zh-TW' ? '/#philosophy' : '/en#philosophy'}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
-                >
-                  {t('philosophy')}
-                </Link>
-                <Link
-                  href={locale === 'zh-TW' ? '/#book' : '/en#book'}
-                  onClick={() => setIsOpen(false)}
-                  className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
-                >
-                  {t('consultations')}
-                </Link>
-                <Link
                   href={locale === 'zh-TW' ? '/#about' : '/en#about'}
                   onClick={() => setIsOpen(false)}
                   className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
@@ -167,11 +153,25 @@ export default function Navbar({ locale, userLevel = 1, userXp = 0 }: NavbarProp
                   {t('about')}
                 </Link>
                 <Link
+                  href={locale === 'zh-TW' ? '/#philosophy' : '/en#philosophy'}
+                  onClick={() => setIsOpen(false)}
+                  className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
+                >
+                  {t('philosophy')}
+                </Link>
+                <Link
                   href={locale === 'zh-TW' ? '/tests' : '/en/tests'}
                   onClick={() => setIsOpen(false)}
                   className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
                 >
-                  {t('tests')}
+                  {t('diagnose')}
+                </Link>
+                <Link
+                  href={locale === 'zh-TW' ? '/#book' : '/en#book'}
+                  onClick={() => setIsOpen(false)}
+                  className="text-sm uppercase tracking-editorial text-slate-400 hover:text-white transition-colors py-2"
+                >
+                  {t('consultations')}
                 </Link>
                 <Link
                   href={getLocalizedPath(switchLocale)}
