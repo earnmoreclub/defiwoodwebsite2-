@@ -39,9 +39,12 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   const messages = await getMessages();
 
+  // NOTE: body is intentionally theme-neutral (no bg-dark-950, no html.dark).
+  // Dark-theme pages declare their own bg-dark-950; light-theme pages
+  // (e.g. /[locale]/tools) declare their own background.
   return (
-    <html lang={locale} suppressHydrationWarning className="dark">
-      <body className="antialiased bg-dark-950 text-slate-300 min-h-screen">
+    <html lang={locale} suppressHydrationWarning>
+      <body className="antialiased min-h-screen text-stone-900">
         <NextIntlClientProvider messages={messages} locale={locale}>
           <Navbar locale={locale} />
           {children}
