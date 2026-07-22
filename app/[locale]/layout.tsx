@@ -22,7 +22,8 @@ export const metadata: Metadata = {
     template: '%s | Awareness Be',
     default: 'Awareness Be — Self-Awareness Gaming Platform',
   },
-  description: 'Evidence-based neuroscience, embodied cognition, and conscious exploration for modern seekers.',
+  description:
+    'Evidence-based neuroscience, embodied cognition, and conscious exploration for modern seekers.',
   icons: {
     icon: '/favicon.ico',
   },
