@@ -8,26 +8,21 @@ interface LanguageToggleProps {
   currentLocale: string;
 }
 
-const localeNames: Record<string, string> = {
-  'zh-TW': '繁中',
-  'en': 'EN',
-};
-
 // Must match i18n.ts defaultLocale
 const DEFAULT_LOCALE = 'zh-TW';
+const SUPPORTED = ['en', 'zh-TW'] as const;
 
 export default function LanguageToggle({ currentLocale }: LanguageToggleProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const switchLocale = currentLocale === 'zh-TW' ? 'en' : 'zh-TW';
-
   // Strip the current locale prefix to get the path-without-locale
   const getPathWithoutLocale = (): string => {
     if (!pathname) return '/';
     const segments = pathname.split('/').filter(Boolean);
-    const firstIsLocale = segments[0] === 'en' || segments[0] === 'zh-TW';
+    const firstIsLocale =
+      segments[0] === 'en' || segments[0] === 'zh-TW';
     if (firstIsLocale) {
       segments.shift();
     }
@@ -37,41 +32,70 @@ export default function LanguageToggle({ currentLocale }: LanguageToggleProps) {
   // Build the destination URL for the target locale
   const getLocalizedPath = (newLocale: string): string => {
     const basePath = getPathWithoutLocale();
-    // With localePrefix: 'as-needed', default locale (zh-TW) has no prefix
+    // With localePrefix: 'as-needed', the default locale has no prefix
     if (newLocale === DEFAULT_LOCALE) {
       return basePath === '/' ? '/' : basePath;
     }
     return basePath === '/' ? '/en' : `/en${basePath}`;
   };
 
-  const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+  // Each label is its own clickable target that navigates to THAT locale
+  const goTo = (newLocale: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    const newPath = getLocalizedPath(switchLocale);
+    e.stopPropagation();
+    if (newLocale === currentLocale) return; // already on this locale
+    const newPath = getLocalizedPath(newLocale);
     startTransition(() => {
-      // Use router.push so the locale-aware server components re-render
       router.push(newPath);
-      // Force refresh to ensure NextIntlClientProvider messages reload
       router.refresh();
     });
   };
 
+  const isEnActive = currentLocale === 'en';
+  const isZhActive = currentLocale === 'zh-TW';
+
   return (
-    <button
-      type="button"
-      onClick={handleToggle}
-      disabled={isPending}
-      className={`group flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-800/50 border border-white/10 hover:border-purple-500/50 hover:bg-dark-700/50 transition-all duration-200 select-none ${
-        isPending ? 'opacity-60 cursor-wait' : 'cursor-pointer'
+    <div
+      className={`group inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-800/50 border border-white/10 hover:border-purple-500/50 hover:bg-dark-700/50 transition-all duration-200 select-none ${
+        isPending ? 'opacity-60 cursor-wait' : ''
       }`}
-      aria-label={`Switch to ${localeNames[switchLocale]}`}
-      title={`Switch language / 切換語言`}
+      title="Switch language / 切換語言"
     >
-      <Globe className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
-      <span className="flex items-center gap-1 text-xs font-medium">
-        <span className={currentLocale === 'en' ? 'text-white' : 'text-slate-500'}>EN</span>
-        <span className="text-slate-600">/</span>
-        <span className={currentLocale === 'zh-TW' ? 'text-white' : 'text-slate-500'}>繁中</span>
-      </span>
-    </button>
+      <Globe className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors pointer-events-none" />
+
+      {/* EN button — clicks navigate to English */}
+      <button
+        type="button"
+        onClick={goTo('en')}
+        disabled={isPending}
+        aria-label="Switch to English"
+        aria-current={isEnActive ? 'true' : 'false'}
+        className={`text-xs font-medium px-1.5 py-0.5 rounded transition-all ${
+          isEnActive
+            ? 'text-white bg-white/10'
+            : 'text-slate-500 hover:text-white hover:bg-white/5 cursor-pointer'
+        }`}
+      >
+        EN
+      </button>
+
+      <span className="text-slate-600 pointer-events-none">/</span>
+
+      {/* 繁中 button — clicks navigate to Traditional Chinese */}
+      <button
+        type="button"
+        onClick={goTo('zh-TW')}
+        disabled={isPending}
+        aria-label="切換到繁體中文"
+        aria-current={isZhActive ? 'true' : 'false'}
+        className={`text-xs font-medium px-1.5 py-0.5 rounded transition-all ${
+          isZhActive
+            ? 'text-white bg-white/10'
+            : 'text-slate-500 hover:text-white hover:bg-white/5 cursor-pointer'
+        }`}
+      >
+        繁中
+      </button>
+    </div>
   );
 }
