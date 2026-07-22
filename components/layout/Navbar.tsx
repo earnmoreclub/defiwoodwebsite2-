@@ -26,9 +26,21 @@ export default function Navbar({ locale, userLevel = 1, userXp = 0 }: NavbarProp
   const pathname = usePathname();
 
   const getLocalizedPath = (newLocale: string) => {
-    const segments = pathname.split('/');
-    segments[1] = newLocale === 'zh-TW' ? '' : newLocale;
-    return segments.join('/').replace(/\/+/g, '/');
+    if (!pathname) return '/';
+
+    const segments = pathname.split('/').filter(Boolean);
+    const firstIsLocale = segments[0] === 'en' || segments[0] === 'zh-TW';
+
+    if (firstIsLocale) {
+      segments.shift();
+    }
+
+    const path = '/' + segments.join('/');
+
+    if (newLocale === 'zh-TW') {
+      return path === '/' ? '/' : path;
+    }
+    return path === '/' ? '/en' : `/en${path}`;
   };
 
   const switchLocale = locale === 'zh-TW' ? 'en' : 'zh-TW';

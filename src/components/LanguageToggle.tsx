@@ -1,8 +1,8 @@
 'use client';
 
 import { Globe } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 interface LanguageToggleProps {
   currentLocale: string;
@@ -15,23 +15,45 @@ const localeNames: Record<string, string> = {
 
 export default function LanguageToggle({ currentLocale }: LanguageToggleProps) {
   const pathname = usePathname();
-  
-  const getLocalizedPath = (newLocale: string) => {
-    const segments = pathname.split('/');
-    if (segments[1] === 'en' || segments[1] === 'zh-TW') {
-      segments[1] = newLocale === 'zh-TW' ? '' : newLocale;
-    } else {
-      segments.splice(1, 0, newLocale === 'zh-TW' ? '' : newLocale);
-    }
-    return segments.join('/').replace(/\/+/g, '/');
-  };
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const switchLocale = currentLocale === 'zh-TW' ? 'en' : 'zh-TW';
+  const isZhTw = currentLocale === 'zh-TW';
+
+  const getLocalizedPath = (newLocale: string) => {
+    if (!pathname) return '/';
+
+    const segments = pathname.split('/').filter(Boolean);
+    const firstIsLocale = segments[0] === 'en' || segments[0] === 'zh-TW';
+
+    if (firstIsLocale) {
+      segments.shift();
+    }
+
+    const path = '/' + segments.join('/');
+
+    if (newLocale === 'zh-TW') {
+      return path === '/' ? '/' : path;
+    }
+    return path === '/' ? '/en' : `/en${path}`;
+  };
+
+  const handleToggle = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const newPath = getLocalizedPath(switchLocale);
+    startTransition(() => {
+      router.replace(newPath, { scroll: false });
+    });
+  };
 
   return (
-    <Link
+    <a
       href={getLocalizedPath(switchLocale)}
-      className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-800/50 border border-white/10 hover:border-purple-500/50 hover:bg-dark-700/50 transition-all duration-200"
+      onClick={handleToggle}
+      className={`group flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark-800/50 border border-white/10 hover:border-purple-500/50 hover:bg-dark-700/50 transition-all duration-200 cursor-pointer select-none ${
+        isPending ? 'opacity-60 pointer-events-none' : ''
+      }`}
       aria-label={`Switch to ${localeNames[switchLocale]}`}
       title={`Switch language / 切換語言`}
     >
@@ -41,6 +63,6 @@ export default function LanguageToggle({ currentLocale }: LanguageToggleProps) {
         <span className="text-slate-600">/</span>
         <span className={currentLocale === 'zh-TW' ? 'text-white' : 'text-slate-500'}>繁中</span>
       </span>
-    </Link>
+    </a>
   );
 }
