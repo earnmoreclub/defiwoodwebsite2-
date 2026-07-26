@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCachedImage, aiImagePrompts, generateImage } from '@/lib/leonardo';
-import { getCachedStabilityImage, stabilityImagePrompts, generateStabilityImage } from '@/lib/stability';
-import { getCachedDalleImage, dalleImagePrompts, generateDalleImage } from '@/lib/dalle';
+import { getCachedMiniMaxImage, minimaxImagePrompts, generateMiniMaxImage } from '@/lib/minimax';
+import { generatePuterImage, generateCategoryImage, puterImagePrompts } from '@/lib/puter-client';
+import { getCachedAIGatewayImage, aiGatewayImagePrompts, generateAIGatewayImage } from '@/lib/ai-gateway';
 
 const validCategories = Object.keys(aiImagePrompts) as Array<keyof typeof aiImagePrompts>;
-type ImageProvider = 'leonardo' | 'stability' | 'dalle';
+type ImageProvider = 'leonardo' | 'minimax' | 'puter' | 'ai-gateway';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -26,10 +27,24 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  if (provider !== 'leonardo' && provider !== 'stability' && provider !== 'dalle') {
+  if (provider !== 'leonardo' && provider !== 'minimax' && provider !== 'puter' && provider !== 'ai-gateway') {
     return NextResponse.json(
-      { error: 'Invalid provider. Valid: leonardo, stability, dalle' },
+      { error: 'Invalid provider. Valid: leonardo, minimax, puter, ai-gateway' },
       { status: 400 }
+    );
+  }
+
+  // Puter.js runs client-side (browser-based, free tier with Puter account)
+  if (provider === 'puter') {
+    return NextResponse.json(
+      {
+        useClientSide: true,
+        provider: 'puter',
+        category,
+        prompt: customPrompt,
+        message: 'Puter.js is browser-side. Use generatePuterImage() in the client.',
+      },
+      { status: 200 }
     );
   }
 
@@ -38,23 +53,24 @@ export async function GET(request: NextRequest) {
     let imageWidth = 1024;
     let imageHeight = 1024;
     let imageId = '';
+    let imageProvider = provider;
 
     if (customPrompt) {
-      if (provider === 'dalle') {
-        const dalle = await generateDalleImage(customPrompt);
-        if (dalle) {
-          imageUrl = dalle.url;
-          imageWidth = dalle.width;
-          imageHeight = dalle.height;
-          imageId = dalle.id;
+      if (provider === 'minimax') {
+        const minimax = await generateMiniMaxImage(customPrompt);
+        if (minimax) {
+          imageUrl = minimax.url;
+          imageWidth = minimax.width;
+          imageHeight = minimax.height;
+          imageId = minimax.id;
         }
-      } else if (provider === 'stability') {
-        const stability = await generateStabilityImage(customPrompt);
-        if (stability) {
-          imageUrl = stability.url;
-          imageWidth = stability.width;
-          imageHeight = stability.height;
-          imageId = stability.id;
+      } else if (provider === 'ai-gateway') {
+        const aig = await generateAIGatewayImage(customPrompt);
+        if (aig) {
+          imageUrl = aig.url;
+          imageWidth = aig.width;
+          imageHeight = aig.height;
+          imageId = aig.id;
         }
       } else {
         const leonardo = await generateImage(customPrompt);
@@ -66,21 +82,21 @@ export async function GET(request: NextRequest) {
         }
       }
     } else if (category) {
-      if (provider === 'dalle') {
-        const dalle = await getCachedDalleImage(category);
-        if (dalle) {
-          imageUrl = dalle.url;
-          imageWidth = dalle.width;
-          imageHeight = dalle.height;
-          imageId = dalle.id;
+      if (provider === 'minimax') {
+        const minimax = await getCachedMiniMaxImage(category);
+        if (minimax) {
+          imageUrl = minimax.url;
+          imageWidth = minimax.width;
+          imageHeight = minimax.height;
+          imageId = minimax.id;
         }
-      } else if (provider === 'stability') {
-        const stability = await getCachedStabilityImage(category);
-        if (stability) {
-          imageUrl = stability.url;
-          imageWidth = stability.width;
-          imageHeight = stability.height;
-          imageId = stability.id;
+      } else if (provider === 'ai-gateway') {
+        const aig = await getCachedAIGatewayImage(category);
+        if (aig) {
+          imageUrl = aig.url;
+          imageWidth = aig.width;
+          imageHeight = aig.height;
+          imageId = aig.id;
         }
       } else {
         const leonardo = await getCachedImage(category);

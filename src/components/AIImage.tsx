@@ -14,7 +14,7 @@ interface AIImageProps {
   priority?: boolean;
   sizes?: string;
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
-  provider?: 'leonardo' | 'stability' | 'puter' | 'dalle';
+  provider?: 'leonardo' | 'minimax' | 'puter' | 'ai-gateway';
 }
 
 interface AIGeneratedImage {
@@ -60,14 +60,14 @@ export default function AIImage({
 
     const fetchImage = async () => {
       try {
-        // Use Puter.js directly on client-side for better UX
+        // Puter.js runs in the browser - call it directly (no API key needed for free tier)
         if (provider === 'puter') {
-          const result = prompt 
+          const result = prompt
             ? await generatePuterImage(prompt, { width, height })
-            : category 
-              ? await generateCategoryImage(category, { width, height })
-              : null;
-          
+            : category
+            ? await generateCategoryImage(category, { width, height })
+            : null;
+
           if (result) {
             setImageData({
               id: result.id,
@@ -77,27 +77,28 @@ export default function AIImage({
               provider: 'puter',
             });
           } else {
-            throw new Error('Puter image generation failed');
+            throw new Error('Puter generation returned no image');
           }
-        } else {
-          // Use server-side API for other providers
-          const params = new URLSearchParams();
-          if (prompt) {
-            params.set('prompt', prompt);
-          } else if (category) {
-            params.set('category', category);
-          }
-          params.set('provider', provider);
-
-          const res = await fetch(`/api/ai-images?${params}`);
-          
-          if (!res.ok) {
-            throw new Error(`Failed: ${res.status}`);
-          }
-
-          const data = await res.json();
-          setImageData(data);
+          return;
         }
+
+        // Server-side providers (leonardo, minimax) go through the API
+        const params = new URLSearchParams();
+        if (prompt) {
+          params.set('prompt', prompt);
+        } else if (category) {
+          params.set('category', category);
+        }
+        params.set('provider', provider);
+
+        const res = await fetch(`/api/ai-images?${params}`);
+        
+        if (!res.ok) {
+          throw new Error(`Failed: ${res.status}`);
+        }
+
+        const data = await res.json();
+        setImageData(data);
       } catch (err) {
         console.error('[AIImage] Fetch error:', err);
         setError(err instanceof Error ? err.message : 'Failed to load');
@@ -133,7 +134,7 @@ export default function AIImage({
     );
   }
 
-  const providerLabel = provider === 'puter' ? 'Puter AI' : provider === 'dalle' ? 'DALL-E 3' : provider === 'stability' ? 'Stability AI' : 'Leonardo AI';
+  const providerLabel = provider === 'ai-gateway' ? 'AI Gateway' : provider === 'puter' ? 'Puter AI' : provider === 'minimax' ? 'MiniMax M3' : 'Leonardo AI';
 
   return (
     <motion.div

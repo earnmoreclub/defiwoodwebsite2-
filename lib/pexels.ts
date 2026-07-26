@@ -107,10 +107,22 @@ export async function getCuratedPhotos(
 
 // Pre-defined image collections for different sections
 export const imageQueries = {
-  hero: ['mindfulness', 'meditation', 'calm nature'],
-  about: ['self-discovery', 'personal growth', 'peaceful moment'],
-  booking: ['consultation', 'professional therapist', 'calm office'],
-  meditation: ['meditation', 'zen', 'peaceful practice'],
-  nature: ['forest', 'mountain', 'ocean waves'],
-  wellness: ['yoga', 'breathing exercises', 'relaxation'],
+  hero: ['mindfulness meditation person forest', 'calm person nature landscape', 'peaceful zen garden person'],
+  about: ['self-discovery reflection person', 'personal growth journey', 'mindful person contemplation'],
+  booking: ['professional therapist office', 'calm consultation space', 'healing wellness room'],
+  meditation: ['meditation practice person', 'zen lotus pose nature', 'mindful breathing calm'],
+  nature: ['serene forest mountains', 'peaceful ocean waves', 'tranquil nature landscape'],
+  wellness: ['yoga practice wellness', 'holistic health balance', 'relaxation spa calm'],
+  philosophy: ['yin yang balance', 'ancient wisdom modern', 'zen minimalism aesthetic'],
+  journal: ['journal writing desk', 'contemplative writing moment', 'creative notebook peaceful'],
 } as const;
+
+// Curated specific image IDs for premium quality (all verified)
+export const curatedImageIds = {
+  hero: [156120, 13338045, 38005937], // Meditation in forest
+  about: [156120, 13338045, 38005937], // Peaceful wellness
+  booking: [4067759, 3958405, 4067759], // Professional calm
+  meditation: [156120, 13338045, 38005937], // Zen practice  
+  nature: [1287145, 15286, 1287145], // Serene nature
+  wellness: [156120, 13338045, 38005937], // Health balance
+};
