@@ -14,7 +14,7 @@ interface AIImageProps {
   priority?: boolean;
   sizes?: string;
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
-  provider?: 'leonardo' | 'stability' | 'puter';
+  provider?: 'leonardo' | 'stability' | 'puter' | 'dalle';
 }
 
 interface AIGeneratedImage {
@@ -133,7 +133,7 @@ export default function AIImage({
     );
   }
 
-  const providerLabel = provider === 'puter' ? 'Puter AI' : provider === 'stability' ? 'Stability AI' : 'Leonardo AI';
+  const providerLabel = provider === 'puter' ? 'Puter AI' : provider === 'dalle' ? 'DALL-E 3' : provider === 'stability' ? 'Stability AI' : 'Leonardo AI';
 
   return (
     <motion.div

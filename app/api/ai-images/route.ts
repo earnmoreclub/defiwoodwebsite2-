@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCachedImage, aiImagePrompts, generateImage } from '@/lib/leonardo';
 import { getCachedStabilityImage, stabilityImagePrompts, generateStabilityImage } from '@/lib/stability';
+import { getCachedDalleImage, dalleImagePrompts, generateDalleImage } from '@/lib/dalle';
 
 const validCategories = Object.keys(aiImagePrompts) as Array<keyof typeof aiImagePrompts>;
-type ImageProvider = 'leonardo' | 'stability';
+type ImageProvider = 'leonardo' | 'stability' | 'dalle';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -25,22 +26,29 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  if (provider !== 'leonardo' && provider !== 'stability') {
+  if (provider !== 'leonardo' && provider !== 'stability' && provider !== 'dalle') {
     return NextResponse.json(
-      { error: 'Invalid provider. Valid: leonardo, stability' },
+      { error: 'Invalid provider. Valid: leonardo, stability, dalle' },
       { status: 400 }
     );
   }
 
   try {
-    let image;
     let imageUrl = '';
     let imageWidth = 1024;
     let imageHeight = 1024;
     let imageId = '';
 
     if (customPrompt) {
-      if (provider === 'stability') {
+      if (provider === 'dalle') {
+        const dalle = await generateDalleImage(customPrompt);
+        if (dalle) {
+          imageUrl = dalle.url;
+          imageWidth = dalle.width;
+          imageHeight = dalle.height;
+          imageId = dalle.id;
+        }
+      } else if (provider === 'stability') {
         const stability = await generateStabilityImage(customPrompt);
         if (stability) {
           imageUrl = stability.url;
@@ -58,7 +66,15 @@ export async function GET(request: NextRequest) {
         }
       }
     } else if (category) {
-      if (provider === 'stability') {
+      if (provider === 'dalle') {
+        const dalle = await getCachedDalleImage(category);
+        if (dalle) {
+          imageUrl = dalle.url;
+          imageWidth = dalle.width;
+          imageHeight = dalle.height;
+          imageId = dalle.id;
+        }
+      } else if (provider === 'stability') {
         const stability = await getCachedStabilityImage(category);
         if (stability) {
           imageUrl = stability.url;
