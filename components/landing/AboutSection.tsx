@@ -52,7 +52,6 @@ export default function AboutSection({ locale: _locale }: AboutSectionProps) {
               height={768}
               rounded="2xl"
               className="aspect-[4/3] w-full"
-              provider="ai-gateway"
             />
             <AIImage
               category="meditation"
@@ -60,7 +59,6 @@ export default function AboutSection({ locale: _locale }: AboutSectionProps) {
               height={768}
               rounded="2xl"
               className="aspect-[4/3] w-full"
-              provider="ai-gateway"
             />
             <AIImage
               category="wellness"
@@ -68,7 +66,6 @@ export default function AboutSection({ locale: _locale }: AboutSectionProps) {
               height={768}
               rounded="2xl"
               className="aspect-[4/3] w-full"
-              provider="ai-gateway"
             />
           </div>
 

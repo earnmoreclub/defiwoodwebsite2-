@@ -274,7 +274,6 @@ export default function BookingSection({ locale: _locale }: BookingSectionProps)
                   height={600}
                   rounded="3xl"
                   className="w-full h-full"
-                  provider="ai-gateway"
                 />
               </div>
               {/* Dark overlay */}

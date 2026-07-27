@@ -114,7 +114,6 @@ export default function Pillars({ locale: _locale }: PillarsProps) {
                       height={768}
                       rounded="3xl"
                       className="w-full h-full"
-                      provider="ai-gateway"
                     />
                   </div>
 

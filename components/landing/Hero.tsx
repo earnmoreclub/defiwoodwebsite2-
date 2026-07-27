@@ -192,7 +192,6 @@ export default function Hero({ locale }: HeroProps) {
                   rounded="3xl"
                   className="w-full h-full"
                   priority
-                  provider="ai-gateway"
                 />
               </div>
 

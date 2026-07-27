@@ -95,7 +95,6 @@ export default function PhilosophyHero({ scrollTo }: Props) {
                 height={1000}
                 rounded="2xl"
                 className="w-full h-full"
-                provider="ai-gateway"
               />
             </div>
             {/* Warm overlay for editorial feel */}

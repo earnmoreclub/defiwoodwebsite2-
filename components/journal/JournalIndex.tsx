@@ -38,7 +38,6 @@ export default function JournalIndex({ articles, categories, locale }: JournalIn
               height={800}
               rounded="3xl"
               className="w-full h-full"
-              provider="ai-gateway"
             />
           </div>
           {/* Gradient overlay */}

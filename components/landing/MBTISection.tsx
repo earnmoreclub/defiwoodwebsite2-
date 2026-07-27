@@ -37,7 +37,6 @@ export default function MBTISection({ locale }: MBTISectionProps) {
               height={768}
               rounded="3xl"
               className="w-full h-full"
-              provider="ai-gateway"
             />
           </div>
 

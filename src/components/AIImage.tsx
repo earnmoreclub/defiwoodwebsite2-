@@ -45,7 +45,7 @@ export default function AIImage({
   priority = false,
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
   rounded = 'xl',
-  provider = 'leonardo',
+  provider = 'puter',
 }: AIImageProps) {
   const [imageData, setImageData] = useState<AIGeneratedImage | null>(null);
   const [loading, setLoading] = useState(true);
