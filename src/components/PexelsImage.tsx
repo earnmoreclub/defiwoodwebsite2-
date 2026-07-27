@@ -249,8 +249,10 @@ const PexelsImage = memo(function PexelsImage({
   const src = imageData.src[quality] || imageData.src.large || imageData.src.medium;
   
   // Use average color as blur placeholder if available
-  const blurDataURL = placeholderColor || imageData.avg_color 
-    ? `data:image/svg+xml;base64,${Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect fill="${imageData.avg_color || '#1a1a2e'}" width="10" height="10"/></svg>`).toString('base64')}`
+  // Base64-encode the SVG using btoa (browser-safe, no Buffer needed)
+  const avgColor = imageData.avg_color || '#1a1a2e';
+  const blurDataURL = placeholderColor || imageData.avg_color
+    ? `data:image/svg+xml;base64,${btoa(`<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect fill="${avgColor}" width="10" height="10"/></svg>`)}`
     : undefined;
 
   return (

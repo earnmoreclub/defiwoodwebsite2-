@@ -5,6 +5,7 @@ import { Brain, Moon, Users, ArrowUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ComponentType } from 'react';
 import PexelsImage from "@/src/components/PexelsImage";
+import SupplementBanner from "@/src/components/SupplementBanner";
 
 interface PillarsProps {
   locale: string;
@@ -21,6 +22,7 @@ interface PillarConfig {
   glow: string;
   ringColor: string;
   imageCategory: 'hero' | 'meditation' | 'booking';
+  tint: 'purple' | 'cyan' | 'emerald';
 }
 
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -38,6 +40,7 @@ const pillarConfig: readonly PillarConfig[] = [
     glow: 'group-hover:shadow-purple-500/30',
     ringColor: 'via-purple-400',
     imageCategory: 'hero',
+    tint: 'purple',
   },
   {
     key: 'stress',
@@ -50,6 +53,7 @@ const pillarConfig: readonly PillarConfig[] = [
     glow: 'group-hover:shadow-cyan-500/30',
     ringColor: 'via-cyan-400',
     imageCategory: 'meditation',
+    tint: 'cyan',
   },
   {
     key: 'consultations',
@@ -62,6 +66,7 @@ const pillarConfig: readonly PillarConfig[] = [
     glow: 'group-hover:shadow-emerald-500/30',
     ringColor: 'via-emerald-400',
     imageCategory: 'booking',
+    tint: 'emerald',
   },
 ];
 
@@ -126,56 +131,113 @@ export default function Pillars({ locale: _locale }: PillarsProps) {
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.8, delay: index * 0.12, ease: EASE_OUT_EXPO }}
                 className="group relative"
+                whileHover={{ y: -6 }}
               >
                 <div
-                  className={`relative p-8 rounded-3xl glass border-white/10 transition-all duration-700 group-hover:scale-[1.03] group-hover:-translate-y-1 ${pillar.borderHover} group-hover:shadow-2xl ${pillar.glow} overflow-hidden min-h-[320px] ring-1 ring-white/5`}
+                  className={`relative p-8 rounded-3xl glass border-white/10 transition-all duration-700 ${pillar.borderHover} group-hover:shadow-2xl ${pillar.glow} overflow-hidden min-h-[320px] ring-1 ring-white/5`}
                 >
-                  {/* Background image */}
-                  <div className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-700">
+                  {/* Animated gradient border on hover */}
+                  <div
+                    className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
+                    style={{
+                      padding: '1px',
+                      background: pillar.key === 'metabolic'
+                        ? 'linear-gradient(135deg, rgba(168,85,247,0.6), rgba(6,182,212,0.6), rgba(16,185,129,0.6))'
+                        : pillar.key === 'stress'
+                        ? 'linear-gradient(135deg, rgba(6,182,212,0.6), rgba(168,85,247,0.6), rgba(16,185,129,0.6))'
+                        : 'linear-gradient(135deg, rgba(16,185,129,0.6), rgba(6,182,212,0.6), rgba(168,85,247,0.6))',
+                      WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                      WebkitMaskComposite: 'xor',
+                      maskComposite: 'exclude',
+                    }}
+                    aria-hidden="true"
+                  />
+
+                  {/* Background image with parallax tilt */}
+                  <motion.div
+                    className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-700"
+                    whileHover={{ scale: 1.08 }}
+                    transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                  >
                     <PexelsImage
                       category={pillar.imageCategory}
                       width={1024}
                       height={768}
                       rounded="3xl"
-                      className="w-full h-full transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full transition-transform duration-700"
                     />
-                  </div>
+                  </motion.div>
 
                   {/* Dark overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-dark-950/85 via-dark-900/75 to-dark-950/85" />
 
                   {/* Color hover wash */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
+                  <motion.div
+                    className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient}`}
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
                     aria-hidden="true"
                   />
 
                   {/* Animated top border accent */}
-                  <div
-                    className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent ${pillar.ringColor} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
+                  <motion.div
+                    className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent ${pillar.ringColor} to-transparent`}
+                    initial={{ opacity: 0, scaleX: 0 }}
+                    whileHover={{ opacity: 100, scaleX: 1 }}
+                    transition={{ duration: 0.5 }}
                     aria-hidden="true"
                   />
 
                   <div className="relative z-10">
-                    <div
-                      className={`w-16 h-16 rounded-2xl ${pillar.iconBg} border ${pillar.borderColor} flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:shadow-xl`}
+                    <motion.div
+                      className={`w-16 h-16 rounded-2xl ${pillar.iconBg} border ${pillar.borderColor} flex items-center justify-center mb-6`}
+                      whileHover={{ scale: 1.1, rotate: 3 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 15 }}
                     >
                       <Icon className={`w-8 h-8 ${pillar.iconColor}`} />
-                    </div>
+                    </motion.div>
 
                     <h3 className="font-serif text-2xl lg:text-[1.7rem] text-white mb-4 leading-snug tracking-tight">
                       {t(`items.${pillar.key}.title`)}
                     </h3>
 
-                    <p className="text-slate-400 text-sm leading-relaxed mb-6 group-hover:text-slate-300 transition-colors duration-500">
+                    <motion.p
+                      className="text-slate-400 text-sm leading-relaxed mb-6"
+                      whileHover={{ color: 'rgb(226,232,240)' }}
+                      transition={{ duration: 0.3 }}
+                    >
                       {t(`items.${pillar.key}.description`)}
-                    </p>
+                    </motion.p>
 
-                    <div
-                      className={`inline-flex items-center text-[11px] uppercase tracking-editorial ${pillar.iconColor} opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-x-1`}
+                    <motion.div
+                      className={`inline-flex items-center text-[11px] uppercase tracking-editorial ${pillar.iconColor}`}
+                      initial={{ opacity: 0, x: -4 }}
+                      whileHover={{ opacity: 100, x: 0 }}
+                      transition={{ duration: 0.4 }}
                     >
                       Explore
-                      <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                      <motion.span
+                        whileHover={{ x: 3 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                      >
+                        <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                      </motion.span>
+                    </motion.div>
+
+                    {/* Subtle supplement shop badge */}
+                    <div
+                      className={`mt-5 pt-5 border-t ${pillar.borderColor} opacity-0 group-hover:opacity-100 transition-opacity duration-700`}
+                    >
+                      <SupplementBanner
+                        badge={t('shop.badge')}
+                        title={t(`items.${pillar.key}.supplementBadge`)}
+                        body={t('shop.footerSubtitle')}
+                        ctaLabel={t('shop.pillarsCta')}
+                        tint={pillar.tint}
+                        variant="inline"
+                        animateOnView={false}
+                      />
                     </div>
                   </div>
                 </div>

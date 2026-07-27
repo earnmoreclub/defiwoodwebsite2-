@@ -93,17 +93,25 @@ export default function AboutSection({ locale: _locale }: AboutSectionProps) {
                 initial={{ opacity: 0, y: 20, scale: 0.96 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.7, delay: img.delay, ease: EASE_OUT_QUART }}
+                transition={{ duration: 0.7, delay: img.delay, ease: EASE_OUT_QUART, type: 'spring', stiffness: 100, damping: 15 }}
                 className="group relative overflow-hidden rounded-2xl ring-1 ring-white/10 hover:ring-white/25 transition-all duration-500 hover:-translate-y-1"
+                whileHover={{ y: -4, scale: 1.02 }}
               >
-                <PexelsImage
-                  category={img.category}
-                  width={1024}
-                  height={768}
-                  rounded="2xl"
-                  className="aspect-[4/3] w-full transition-transform duration-700 group-hover:scale-105"
-                />
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                >
+                  <PexelsImage
+                    category={img.category}
+                    width={1024}
+                    height={768}
+                    rounded="2xl"
+                    className="aspect-[4/3] w-full"
+                  />
+                </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-dark-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Subtle reveal overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 mix-blend-overlay" />
               </motion.div>
             ))}
           </div>

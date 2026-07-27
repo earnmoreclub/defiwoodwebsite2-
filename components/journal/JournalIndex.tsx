@@ -2,10 +2,12 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { JournalArticle, JournalCategory } from '@/types/journal';
 import ArticleCard from './ArticleCard';
 import CategoryFilter from './CategoryFilter';
 import PexelsImage from "@/src/components/PexelsImage";
+import SupplementBanner from "@/src/components/SupplementBanner";
 
 interface JournalIndexProps {
   articles: JournalArticle[];
@@ -16,7 +18,16 @@ interface JournalIndexProps {
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function JournalIndex({ articles, categories, locale }: JournalIndexProps) {
+  const t = useTranslations();
   const [activeCategory, setActiveCategory] = useState<JournalCategory | 'all'>('all');
+
+  // Stable per-article shop variant selection based on slug
+  const tints = useMemo<Array<'purple' | 'cyan' | 'emerald'>>(() => {
+    return articles.map((_, i) => {
+      const cycle: Array<'purple' | 'cyan' | 'emerald'> = ['purple', 'cyan', 'emerald'];
+      return cycle[i % cycle.length];
+    });
+  }, [articles]);
 
   const filteredArticles = useMemo(() => {
     if (activeCategory === 'all') return articles;
@@ -115,9 +126,28 @@ export default function JournalIndex({ articles, categories, locale }: JournalIn
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredArticles
               .filter((a) => activeCategory !== 'all' || a.slug !== featuredArticle?.slug)
-              .map((article) => (
-                <ArticleCard key={article.slug} article={article} locale={locale} />
-              ))}
+              .map((article, idx) => {
+                // Index into the original articles list to get a stable tint
+                const originalIdx = articles.findIndex((a) => a.slug === article.slug);
+                const tint = tints[originalIdx] ?? 'emerald';
+                return (
+                  <div key={article.slug} className="flex flex-col">
+                    <ArticleCard article={article} locale={locale} />
+                    {/* Per-article shop callout — renders beneath each card */}
+                    <div className="mt-4">
+                      <SupplementBanner
+                        badge="Awareness Be Shop"
+                        title={t('shop.bannerTitle')}
+                        body={t('shop.bannerBody')}
+                        ctaLabel={t('shop.journalCta')}
+                        tint={tint}
+                        variant="card"
+                        animateOnView={false}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         )}
       </section>

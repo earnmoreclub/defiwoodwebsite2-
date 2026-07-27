@@ -151,6 +151,8 @@ export default function Hero({ locale }: HeroProps) {
                   {t('primaryCta')}
                   <ArrowRight className="w-4 h-4 ml-2.5 group-hover:translate-x-1.5 transition-transform duration-300" />
                 </span>
+                {/* Shimmer sweep effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-cyan-400 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute inset-0 ring-1 ring-white/20 rounded-2xl" />
               </Link>

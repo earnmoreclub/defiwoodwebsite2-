@@ -33,8 +33,14 @@ export default function MBTISection({ locale }: MBTISectionProps) {
           transition={{ duration: 0.9, ease: EASE_OUT_EXPO }}
           className="relative rounded-3xl p-10 md:p-16 text-center overflow-hidden ring-1 ring-white/10 shadow-2xl shadow-purple-500/10"
         >
-          {/* Background image */}
-          <div className="absolute inset-0 opacity-50">
+          {/* Background image with parallax effect */}
+          <motion.div
+            className="absolute inset-0 opacity-50"
+            initial={{ scale: 1.08 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.4, ease: EASE_OUT_EXPO }}
+          >
             <PexelsImage
               category="mbti"
               width={1024}
@@ -42,7 +48,7 @@ export default function MBTISection({ locale }: MBTISectionProps) {
               rounded="3xl"
               className="w-full h-full"
             />
-          </div>
+          </motion.div>
 
           {/* Layered overlays for legibility */}
           <div className="absolute inset-0 bg-gradient-to-br from-dark-950/92 via-dark-900/85 to-dark-950/92" />

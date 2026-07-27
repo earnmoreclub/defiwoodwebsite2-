@@ -34,17 +34,31 @@
     "items": {
       "metabolic": {
         "title": "具身認知",
-        "description": "透過身心整合、軀體練習與神經路徑優化，提升您的思維清晰度。"
+        "description": "透過身心整合、軀體練習與神經路徑優化，提升您的思維清晰度。",
+        "supplementBadge": "搭配適應原與益智配方"
       },
       "stress": {
         "title": "內在韌性",
-        "description": "以經過驗證的呼吸法框架與情緒調節技巧，掌握您神經系統的調節之道。"
+        "description": "以經過驗證的呼吸法框架與情緒調節技巧，掌握您神經系統的調節之道。",
+        "supplementBadge": "神經系統平衡配方"
       },
       "consultations": {
         "title": "一對一教練",
-        "description": "直接獲得專業指導、个性化的內在工作藍圖，以及轉化性的課程。"
+        "description": "直接獲得專業指導、个性化的內在工作藍圖，以及轉化性的課程。",
+        "supplementBadge": "實務配方與日常方案"
       }
     }
+  },
+  "shop": {
+    "badge": "Awareness Be 商城",
+    "pillarsCta": "探索配方",
+    "journalCta": "查看相關配方",
+    "footerTitle": "完整生態",
+    "footerCta": "前往商城",
+    "footerSubtitle": "針對神經系統平衡、專注與深度休息的精準配方。",
+    "bannerTitle": "深化您的內在練習",
+    "bannerBody": "Awareness Be 上的每一篇文章，皆搭配與內容相互補的實務級配方，協助您把所讀轉化為日常實踐。",
+    "bannerCta": "瀏覽 Awareness Be 商城"
   },
   "blog": {
     "sectionTitle": "洞見與編輯精選",

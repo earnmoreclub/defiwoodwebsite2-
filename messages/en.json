@@ -33,17 +33,31 @@
     "items": {
       "metabolic": {
         "title": "Embodied Cognition",
-        "description": "Transform your mental clarity through body-mind integration, somatic practices, and neural pathway optimization."
+        "description": "Transform your mental clarity through body-mind integration, somatic practices, and neural pathway optimization.",
+        "supplementBadge": "Pair with adaptogens & nootropics"
       },
       "stress": {
         "title": "Inner Resilience",
-        "description": "Master your nervous system with proven breathwork frameworks and emotional regulation mastery."
+        "description": "Master your nervous system with proven breathwork frameworks and emotional regulation mastery.",
+        "supplementBadge": "Nervous-system support stack"
       },
       "consultations": {
         "title": "1-on-1 Coaching",
-        "description": "Direct access to expert guidance, personalized inner work blueprints, and transformational sessions."
+        "description": "Direct access to expert guidance, personalized inner work blueprints, and transformational sessions.",
+        "supplementBadge": "Curated protocols & formulas"
       }
     }
+  },
+  "shop": {
+    "badge": "Awareness Be Shop",
+    "pillarsCta": "Explore formulations",
+    "journalCta": "See related formulas",
+    "footerTitle": "Ecosystem",
+    "footerCta": "Visit Shop",
+    "footerSubtitle": "Targeted formulations for nervous-system balance, focus & rest.",
+    "bannerTitle": "Support Your Inner Work",
+    "bannerBody": "Every article on Awareness Be is paired with practitioner-grade formulations designed to complement the practices you read about.",
+    "bannerCta": "Browse the Awareness Be Shop"
   },
   "blog": {
     "sectionTitle": "Insights & Editorial",

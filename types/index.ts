@@ -7,6 +7,46 @@ export type { PexelsPhoto, PexelsSearchResponse, PexelsSearchOptions, ImageCateg
 export type ImageQuality = 'tiny' | 'small' | 'medium' | 'large' | 'large2x';
 export type RoundedClass = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 
+// Valid image categories (strict allowlist)
+export type ImageCategoryValid = 'hero' | 'about' | 'booking' | 'meditation' | 'nature' | 'wellness' | 'philosophy' | 'journal' | 'mbti';
+
+// API Response Types
+export interface ApiResponse<T> {
+  data: T;
+  cachedAt: string;
+}
+
+export interface ApiErrorResponse {
+  error: string;
+  message?: string;
+}
+
+export interface PhotoResponse {
+  photo: import('@/lib/pexels').PexelsPhoto;
+  cachedAt: string;
+}
+
+export interface CategoryResponse {
+  images: import('@/lib/pexels').PexelsPhoto[];
+  category: ImageCategoryValid;
+  count: number;
+  cachedAt: string;
+}
+
+// Image Loading State
+export type ImageLoadState = 'loading' | 'loaded' | 'error' | 'empty';
+
+// Image component common props
+export interface ImageComponentBaseProps {
+  width: number;
+  height: number;
+  className?: string;
+  priority?: boolean;
+  sizes?: string;
+  rounded?: RoundedClass;
+  quality?: ImageQuality;
+}
+
 export interface Article {
   id: string;
   title: string;
