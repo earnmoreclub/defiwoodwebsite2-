@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Heart, Mail, Instagram, Sparkles } from 'lucide-react';
+import { Heart, Mail, Instagram, Sparkles, Phone } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 interface FooterProps {
@@ -76,15 +76,21 @@ export default function Footer({ locale }: FooterProps) {
             </h3>
             <ul className="space-y-3">
               <li className="flex items-center space-x-2 text-sm text-slate-400">
-                <Instagram className="w-4 h-4 text-emerald-400" />
-                <a href="#" className="hover:text-white transition-colors">
-                  {t('contactLinks.instagram')}
+                <Mail className="w-4 h-4 text-emerald-400" />
+                <a href="mailto:services@awarenessbe.com" className="hover:text-white transition-colors">
+                  services@awarenessbe.com
                 </a>
               </li>
               <li className="flex items-center space-x-2 text-sm text-slate-400">
-                <Mail className="w-4 h-4 text-emerald-400" />
-                <a href="mailto:hello@awarenessbe.com" className="hover:text-white transition-colors">
-                  {t('contactLinks.email')}
+                <Phone className="w-4 h-4 text-emerald-400" />
+                <a href="https://wa.me/85252380490" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  (+852) 5238 0490
+                </a>
+              </li>
+              <li className="flex items-center space-x-2 text-sm text-slate-400">
+                <Instagram className="w-4 h-4 text-emerald-400" />
+                <a href="#" className="hover:text-white transition-colors">
+                  {t('contactLinks.instagram')}
                 </a>
               </li>
             </ul>
