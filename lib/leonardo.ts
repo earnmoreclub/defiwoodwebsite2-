@@ -37,6 +37,7 @@ export const aiImagePrompts = {
   wellness: 'Holistic wellness practice, person breathing mindfully, natural stone garden, soft bokeh, health and balance, editorial style',
   philosophy: 'Ancient wisdom meeting modern life, yin yang symbolism, minimalist composition, thoughtful symbolism, fine art photography',
   journal: 'Contemplative writing moment, journal on wooden desk, morning coffee, window light, cozy atmosphere, lifestyle photography',
+  mbti: 'Person discovering inner self, mirror reflection, psychological insight, warm lighting, mind map visualization, modern psychology concept',
 } as const;
 
 export async function generateImage(

@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const category = searchParams.get('category') as keyof typeof aiImagePrompts | null;
   const customPrompt = searchParams.get('prompt');
-  const provider = (searchParams.get('provider') as ImageProvider) || 'leonardo';
+  const provider = (searchParams.get('provider') as ImageProvider) || 'ai-gateway';
 
   if (!category && !customPrompt) {
     return NextResponse.json(

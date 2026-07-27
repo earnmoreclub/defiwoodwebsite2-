@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Calendar, BookOpen, Sparkles, Eye, Brain, Heart } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import AIImage from '@/src/components/AIImage';
 
 interface HeroProps {
   locale: string;
@@ -181,7 +182,23 @@ export default function Hero({ locale }: HeroProps) {
             className="relative hidden lg:block"
           >
             {/* Main glass card */}
-            <div className="relative glass-strong rounded-3xl p-12 aspect-[4/5] flex flex-col justify-center overflow-hidden">
+            <div className="relative glass-strong rounded-3xl aspect-[4/5] flex flex-col justify-center overflow-hidden">
+              {/* AI-generated background image */}
+              <div className="absolute inset-0 opacity-50 mix-blend-luminosity">
+                <AIImage
+                  category="hero"
+                  width={1024}
+                  height={1024}
+                  rounded="3xl"
+                  className="w-full h-full"
+                  priority
+                  provider="ai-gateway"
+                />
+              </div>
+
+              {/* Dark overlay for text legibility */}
+              <div className="absolute inset-0 bg-gradient-to-br from-dark-950/80 via-dark-900/70 to-dark-950/80" />
+
               {/* Animated glow rings */}
               <div className="absolute -top-20 -right-20 w-40 h-40 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
               <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-cyan-500/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />

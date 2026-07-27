@@ -9,6 +9,7 @@ import {
   PREFERRED_TIME_OPTIONS,
   validateBookingForm,
 } from '@/lib/calcom';
+import AIImage from '@/src/components/AIImage';
 import type { BookingFormData } from '@/types';
 
 interface BookingSectionProps {
@@ -265,6 +266,19 @@ export default function BookingSection({ locale: _locale }: BookingSectionProps)
             {/* Cal.com Card */}
             <div className="relative glass-strong rounded-3xl p-8 overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl" />
+              {/* AI image background */}
+              <div className="absolute inset-0 opacity-30 mix-blend-luminosity">
+                <AIImage
+                  category="booking"
+                  width={800}
+                  height={600}
+                  rounded="3xl"
+                  className="w-full h-full"
+                  provider="ai-gateway"
+                />
+              </div>
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-dark-950/85 via-dark-900/70 to-dark-950/85" />
               <div className="relative">
                 <p className="text-xs uppercase tracking-editorial text-cyan-400 mb-3 flex items-center gap-2">
                   <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />

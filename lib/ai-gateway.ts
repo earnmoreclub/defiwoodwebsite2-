@@ -4,21 +4,19 @@
  * Setup:
  * 1. Get your AI Gateway API key from https://ai.vercel.com
  * 2. Add VERCEL_AI_GATEWAY_API_KEY to your .env.local
- * 3. Configure providers in AI Gateway dashboard (OpenAI, Stability AI, etc.)
+ * 3. Deploy to Vercel for the gateway to work with model providers
+ * 
+ * Note: The Vercel AI Gateway is primarily designed for use from Vercel deployments
+ * or via the AI SDK (npm i ai). The gateway URL will work from serverless functions
+ * deployed on Vercel.
  */
 
-const AI_GATEWAY_URL = 'https://gateway.ai.cloudflare.com/v1/account';
-
-interface AIGatewayConfig {
-  accountId: string;
-  gatewayId: string;
+export interface AIGatewayConfig {
   apiKey: string;
 }
 
-// Default configuration - you can customize these
+// Default configuration from environment
 const DEFAULT_CONFIG: AIGatewayConfig = {
-  accountId: process.env.AI_GATEWAY_ACCOUNT_ID || 'your-account-id',
-  gatewayId: process.env.AI_GATEWAY_GATEWAY_ID || 'your-gateway-id',
   apiKey: process.env.VERCEL_AI_GATEWAY_API_KEY || '',
 };
 
@@ -30,7 +28,7 @@ export interface AIGatewayImageResult {
   provider: string;
 }
 
-// Pre-defined prompts for different sections (aligned with other providers)
+// Pre-defined prompts for different sections
 export const aiGatewayImagePrompts = {
   hero: 'Serene mindfulness meditation scene, soft natural lighting, peaceful forest clearing, ethereal glow, photorealistic style, 4K quality',
   about: 'Introspective self-discovery moment, warm golden light, person in contemplation, soft focus background, cinematic photography, professional portrait',
@@ -40,6 +38,7 @@ export const aiGatewayImagePrompts = {
   wellness: 'Holistic wellness practice, person breathing mindfully, natural stone garden, soft bokeh, health and balance, editorial wellness magazine style',
   philosophy: 'Ancient wisdom meeting modern life, yin yang symbolism, minimalist composition, thoughtful symbolism, fine art photography, zen aesthetic',
   journal: 'Contemplative writing moment, journal on wooden desk, morning coffee, window light, cozy atmosphere, lifestyle photography, warm tones',
+  mbti: 'Person discovering inner self, mirror reflection, psychological insight, warm lighting, mind map visualization, modern psychology concept, soft gradient background',
 } as const;
 
 // Cache for generated images
@@ -48,20 +47,19 @@ const CACHE_TTL = 3600000; // 1 hour
 
 /**
  * Generate image using Vercel AI Gateway
- * Supports multiple providers configured in AI Gateway
+ * The gateway provides access to OpenAI DALL-E and other providers.
+ * It works through the unified AI Gateway endpoint.
  */
 export async function generateAIGatewayImage(
   prompt: string,
   options: {
-    provider?: 'openai' | 'stability-ai' | 'replicate';
     model?: string;
     width?: number;
     height?: number;
   } = {}
 ): Promise<AIGatewayImageResult | null> {
   const {
-    provider = 'openai',
-    model,
+    model = 'openai/dall-e-3',
     width = 1024,
     height = 1024,
   } = options;
@@ -72,73 +70,21 @@ export async function generateAIGatewayImage(
   }
 
   try {
-    // Build the AI Gateway URL
-    const baseUrl = `https://gateway.ai.cloudflare.com/v1/${DEFAULT_CONFIG.accountId}/${DEFAULT_CONFIG.gatewayId}`;
-    
-    let endpoint = '';
-    let requestBody: Record<string, unknown> = {};
-    let headers: Record<string, string> = {
-      'Authorization': `Bearer ${DEFAULT_CONFIG.apiKey}`,
-      'Content-Type': 'application/json',
-    };
-
-    switch (provider) {
-      case 'openai':
-        // Using DALL-E through AI Gateway
-        endpoint = `${baseUrl}/openai/chat/completions`;
-        requestBody = {
-          model: model || 'dall-e-3',
-          messages: [
-            {
-              role: 'user',
-              content: `Generate an image: ${prompt}`
-            }
-          ],
-          max_tokens: 1000,
-        };
-        // For DALL-E, we need to use the images endpoint
-        endpoint = `${baseUrl}/openai/images/generations`;
-        requestBody = {
-          model: model || 'dall-e-3',
-          prompt: prompt,
-          n: 1,
-          size: `${width}x${height}`,
-        };
-        break;
-
-      case 'stability-ai':
-        endpoint = `${baseUrl}/stability-ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image`;
-        requestBody = {
-          text_prompts: [
-            {
-              text: prompt,
-              weight: 1,
-            },
-          ],
-          cfg_scale: 7,
-          height: height,
-          width: width,
-          steps: 30,
-        };
-        break;
-
-      case 'replicate':
-        endpoint = `${baseUrl}/replicate/predictions`;
-        requestBody = {
-          version: model || 'stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1f35c6e1c05c29',
-          input: {
-            prompt: prompt,
-            width: width,
-            height: height,
-          },
-        };
-        break;
-    }
-
-    const response = await fetch(endpoint, {
+    // Vercel AI Gateway unified endpoint
+    // Format: https://ai.vercel.com/v1/{provider}/{endpoint}
+    // For images: https://ai.vercel.com/v1/images/generations
+    const response = await fetch('https://ai.vercel.com/v1/images/generations', {
       method: 'POST',
-      headers,
-      body: JSON.stringify(requestBody),
+      headers: {
+        'Authorization': `Bearer ${DEFAULT_CONFIG.apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: model,
+        prompt: prompt,
+        n: 1,
+        size: width >= 1024 ? '1024x1024' : '512x512',
+      }),
     });
 
     if (!response.ok) {
@@ -149,42 +95,16 @@ export async function generateAIGatewayImage(
 
     const data = await response.json();
 
-    // Parse response based on provider
+    // Parse response - Vercel AI Gateway returns OpenAI-compatible format
     let imageUrl = '';
     let imageId = `aigateway-${Date.now()}`;
 
-    switch (provider) {
-      case 'openai':
-        if (data.data?.[0]?.url) {
-          imageUrl = data.data[0].url;
-          imageId = data.data[0].revised_prompt || imageId;
-        } else if (data.data?.[0]?.b64_json) {
-          // Base64 response - would need to handle differently
-          console.error('[AI Gateway] Base64 response not supported');
-          return null;
-        }
-        break;
-
-      case 'stability-ai':
-        if (data.artifacts?.[0]?.base64) {
-          imageUrl = `data:image/png;base64,${data.artifacts[0].base64}`;
-          imageId = data.id || imageId;
-        }
-        break;
-
-      case 'replicate':
-        if (data.output?.[0]) {
-          imageUrl = data.output[0];
-          imageId = data.id || imageId;
-        } else if (data.urls?.get) {
-          // Poll for result
-          const resultResponse = await fetch(data.urls.get, { headers });
-          const resultData = await resultResponse.json();
-          if (resultData.output?.[0]) {
-            imageUrl = resultData.output[0];
-          }
-        }
-        break;
+    if (data.data?.[0]?.url) {
+      imageUrl = data.data[0].url;
+      imageId = data.data[0].revised_prompt || imageId;
+    } else if (data.data?.[0]?.b64_json) {
+      console.error('[AI Gateway] Base64 response not supported - need URL response');
+      return null;
     }
 
     if (!imageUrl) {
@@ -197,7 +117,7 @@ export async function generateAIGatewayImage(
       url: imageUrl,
       width,
       height,
-      provider: `ai-gateway-${provider}`,
+      provider: `ai-gateway-${model.split('/')[1] || 'image'}`,
     };
   } catch (error) {
     console.error('[AI Gateway] Generation error:', error);
@@ -211,12 +131,11 @@ export async function generateAIGatewayImage(
 export async function getCachedAIGatewayImage(
   category: keyof typeof aiGatewayImagePrompts,
   options: {
-    provider?: 'openai' | 'stability-ai' | 'replicate';
     width?: number;
     height?: number;
   } = {}
 ): Promise<AIGatewayImageResult | null> {
-  const cacheKey = `${category}-${options.provider || 'openai'}-${options.width || 1024}-${options.height || 1024}`;
+  const cacheKey = `${category}-${options.width || 1024}-${options.height || 1024}`;
 
   const cached = imageCache.get(cacheKey);
   if (cached) {
@@ -236,33 +155,4 @@ export async function getCachedAIGatewayImage(
   }
 
   return result;
-}
-
-/**
- * List available models from AI Gateway
- */
-export async function listAIGatewayModels(): Promise<string[]> {
-  if (!DEFAULT_CONFIG.apiKey) {
-    return [];
-  }
-
-  try {
-    const baseUrl = `https://gateway.ai.cloudflare.com/v1/${DEFAULT_CONFIG.accountId}/${DEFAULT_CONFIG.gatewayId}`;
-    
-    const response = await fetch(`${baseUrl}/models`, {
-      headers: {
-        'Authorization': `Bearer ${DEFAULT_CONFIG.apiKey}`,
-      },
-    });
-
-    if (!response.ok) {
-      return [];
-    }
-
-    const data = await response.json();
-    return data.models?.map((m: { id: string }) => m.id) || [];
-  } catch (error) {
-    console.error('[AI Gateway] List models error:', error);
-    return [];
-  }
 }

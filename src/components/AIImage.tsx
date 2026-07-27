@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { generatePuterImage, generateCategoryImage, puterImagePrompts } from '@/lib/puter-client';
 
 interface AIImageProps {
-  category?: 'hero' | 'about' | 'booking' | 'meditation' | 'nature' | 'wellness' | 'philosophy' | 'journal';
+  category?: 'hero' | 'about' | 'booking' | 'meditation' | 'nature' | 'wellness' | 'philosophy' | 'journal' | 'mbti';
   prompt?: string;
   width: number;
   height: number;

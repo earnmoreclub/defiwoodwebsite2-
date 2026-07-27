@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Brain, Moon, Users, ArrowUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ComponentType } from 'react';
+import AIImage from '@/src/components/AIImage';
 
 interface PillarsProps {
   locale: string;
@@ -19,6 +20,7 @@ interface PillarConfig {
   iconColor: string;
   glow: string;
   ringColor: string;
+  imageCategory: 'hero' | 'meditation' | 'booking';
 }
 
 const pillarConfig: readonly PillarConfig[] = [
@@ -32,6 +34,7 @@ const pillarConfig: readonly PillarConfig[] = [
     iconColor: 'text-purple-400',
     glow: 'group-hover:shadow-purple-500/30',
     ringColor: 'via-purple-400',
+    imageCategory: 'hero',
   },
   { 
     key: 'stress', 
@@ -43,6 +46,7 @@ const pillarConfig: readonly PillarConfig[] = [
     iconColor: 'text-cyan-400',
     glow: 'group-hover:shadow-cyan-500/30',
     ringColor: 'via-cyan-400',
+    imageCategory: 'meditation',
   },
   { 
     key: 'consultations', 
@@ -54,6 +58,7 @@ const pillarConfig: readonly PillarConfig[] = [
     iconColor: 'text-emerald-400',
     glow: 'group-hover:shadow-emerald-500/30',
     ringColor: 'via-emerald-400',
+    imageCategory: 'booking',
   },
 ];
 
@@ -100,7 +105,22 @@ export default function Pillars({ locale: _locale }: PillarsProps) {
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 className="group relative"
               >
-                <div className={`relative p-8 rounded-3xl glass border-white/10 transition-all duration-500 group-hover:scale-[1.03] ${pillar.borderHover} group-hover:shadow-2xl ${pillar.glow} overflow-hidden`}>
+                <div className={`relative p-8 rounded-3xl glass border-white/10 transition-all duration-500 group-hover:scale-[1.03] ${pillar.borderHover} group-hover:shadow-2xl ${pillar.glow} overflow-hidden min-h-[280px]`}>
+                  {/* AI-generated background image */}
+                  <div className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-500">
+                    <AIImage
+                      category={pillar.imageCategory}
+                      width={1024}
+                      height={768}
+                      rounded="3xl"
+                      className="w-full h-full"
+                      provider="ai-gateway"
+                    />
+                  </div>
+
+                  {/* Dark overlay for legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-dark-950/80 via-dark-900/70 to-dark-950/80" />
+
                   {/* Gradient overlay on hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
                   

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useCopy } from './PhilosophyExperience';
+import AIImage from '@/src/components/AIImage';
 
 type Props = { scrollTo: string };
 
@@ -86,12 +87,20 @@ export default function PhilosophyHero({ scrollTo }: Props) {
           className="md:col-span-5"
         >
           <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-charcoal/10 shadow-[0_30px_60px_-30px_rgba(28,25,23,0.3)]">
+            {/* AI-generated background image */}
+            <div className="absolute inset-0">
+              <AIImage
+                category="philosophy"
+                width={800}
+                height={1000}
+                rounded="2xl"
+                className="w-full h-full"
+                provider="ai-gateway"
+              />
+            </div>
+            {/* Warm overlay for editorial feel */}
             <div
-              className="absolute inset-0 bg-gradient-to-br from-sage-100 via-cream-100 to-clay"
-              style={{
-                backgroundImage:
-                  'linear-gradient(135deg, rgba(120,134,107,0.18) 0%, rgba(231,225,216,0.6) 50%, rgba(28,25,23,0.08) 100%)',
-              }}
+              className="absolute inset-0 bg-gradient-to-br from-sage-100/40 via-cream-100/60 to-clay/30"
             />
             {/* Editorial overlay content */}
             <div className="absolute inset-0 p-8 flex flex-col justify-end text-charcoal">

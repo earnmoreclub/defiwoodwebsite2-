@@ -18,6 +18,7 @@ export const minimaxImagePrompts = {
   wellness: 'Holistic wellness practice, person breathing mindfully in a peaceful setting, natural stone garden background, soft bokeh effect, health and balance symbolism, editorial wellness magazine style, warm and nurturing atmosphere',
   philosophy: 'Ancient wisdom meeting modern life, yin yang symbolism subtly integrated, minimalist composition with meaningful objects, fine art photography style, zen aesthetic, contemplative mood, elegant simplicity',
   journal: 'Contemplative writing moment, leather journal on a rustic wooden desk, morning coffee steam rising, warm window light streaming in, cozy atmosphere, lifestyle photography, nostalgic warm tones, creative inspiration',
+  mbti: 'Person discovering inner self, mirror reflection, psychological insight, warm lighting, mind map visualization, modern psychology concept, soft gradient background, cinematic style',
 } as const;
 
 // Cache for generated images

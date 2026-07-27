@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Brain } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import AIImage from '@/src/components/AIImage';
 
 interface MBTISectionProps {
   locale: string;
@@ -26,8 +27,25 @@ export default function MBTISection({ locale }: MBTISectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8 }}
-          className="glass rounded-3xl p-8 md:p-12 text-center"
+          className="relative rounded-3xl p-8 md:p-12 text-center overflow-hidden"
         >
+          {/* AI-generated background */}
+          <div className="absolute inset-0 opacity-40">
+            <AIImage
+              category="mbti"
+              width={1024}
+              height={768}
+              rounded="3xl"
+              className="w-full h-full"
+              provider="ai-gateway"
+            />
+          </div>
+
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-dark-950/90 via-dark-900/85 to-dark-950/90" />
+
+          {/* Glass border */}
+          <div className="absolute inset-0 rounded-3xl border border-white/10" />
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-purple-500/20 to-cyan-500/20 mb-6">
             <Brain className="w-7 h-7 text-purple-400" />
           </div>

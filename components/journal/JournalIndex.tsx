@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { JournalArticle, JournalCategory } from '@/types/journal';
 import ArticleCard from './ArticleCard';
 import CategoryFilter from './CategoryFilter';
+import AIImage from '@/src/components/AIImage';
 
 interface JournalIndexProps {
   articles: JournalArticle[];
@@ -26,20 +27,38 @@ export default function JournalIndex({ articles, categories, locale }: JournalIn
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="mb-12 text-center">
-        <div className="inline-block px-4 py-1.5 mb-4 rounded-full bg-purple-400/10 border border-purple-400/20">
-          <span className="text-xs uppercase tracking-editorial text-purple-300 font-medium">
-            Awareness Be Journal
-          </span>
+      {/* Hero Section with AI Image */}
+      <section className="mb-12">
+        <div className="relative rounded-3xl overflow-hidden">
+          {/* AI-generated background */}
+          <div className="absolute inset-0 opacity-40">
+            <AIImage
+              category="journal"
+              width={1600}
+              height={800}
+              rounded="3xl"
+              className="w-full h-full"
+              provider="ai-gateway"
+            />
+          </div>
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-dark-950/90 via-dark-900/70 to-dark-950/90" />
+          {/* Text content */}
+          <div className="relative text-center py-16 px-6">
+            <div className="inline-block px-4 py-1.5 mb-4 rounded-full bg-purple-400/20 border border-purple-400/30">
+              <span className="text-xs uppercase tracking-editorial text-purple-300 font-medium">
+                Awareness Be Journal
+              </span>
+            </div>
+            <h1 className="font-serif text-5xl md:text-6xl text-white mb-4">
+              神經科學 · 覺察 · 自我成長
+            </h1>
+            <p className="text-slate-300 max-w-2xl mx-auto text-lg leading-relaxed">
+              探索身體、情緒與大腦之間的深層連結，
+              透過科學實證的視角，深化你的自我覺察。
+            </p>
+          </div>
         </div>
-        <h1 className="font-serif text-5xl md:text-6xl text-white mb-4">
-          神經科學 · 覺察 · 自我成長
-        </h1>
-        <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
-          探索身體、情緒與大腦之間的深層連結，
-          透過科學實證的視角，深化你的自我覺察。
-        </p>
       </section>
 
       {/* Category Filter */}

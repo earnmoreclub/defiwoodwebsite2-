@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Quote, Sparkles } from 'lucide-react';
-import PexelsImage from '@/src/components/PexelsImage';
+import AIImage from '@/src/components/AIImage';
 
 interface AboutSectionProps {
   locale: string;
@@ -44,28 +44,31 @@ export default function AboutSection({ locale: _locale }: AboutSectionProps) {
             <p>{t('p3')}</p>
           </div>
 
-          {/* Image gallery */}
+          {/* AI Image gallery */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
-            <PexelsImage
+            <AIImage
               category="nature"
-              width={400}
-              height={300}
+              width={1024}
+              height={768}
               rounded="2xl"
               className="aspect-[4/3] w-full"
+              provider="ai-gateway"
             />
-            <PexelsImage
+            <AIImage
               category="meditation"
-              width={400}
-              height={300}
+              width={1024}
+              height={768}
               rounded="2xl"
               className="aspect-[4/3] w-full"
+              provider="ai-gateway"
             />
-            <PexelsImage
+            <AIImage
               category="wellness"
-              width={400}
-              height={300}
+              width={1024}
+              height={768}
               rounded="2xl"
               className="aspect-[4/3] w-full"
+              provider="ai-gateway"
             />
           </div>
 
