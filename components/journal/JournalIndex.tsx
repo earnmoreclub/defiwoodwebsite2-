@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { JournalArticle, JournalCategory } from '@/types/journal';
 import ArticleCard from './ArticleCard';
 import CategoryFilter from './CategoryFilter';
-import AIImage from "@/src/components/PexelsImage"';
+import PexelsImage from "@/src/components/PexelsImage";
 
 interface JournalIndexProps {
   articles: JournalArticle[];

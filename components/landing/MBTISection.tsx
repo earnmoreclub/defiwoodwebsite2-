@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Brain } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import AIImage from "@/src/components/PexelsImage"';
+import PexelsImage from "@/src/components/PexelsImage";
 
 interface MBTISectionProps {
   locale: string;

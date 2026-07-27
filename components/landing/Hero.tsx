@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Calendar, BookOpen, Sparkles, Eye, Brain, Heart } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import AIImage from "@/src/components/PexelsImage"';
+import PexelsImage from "@/src/components/PexelsImage";
 
 interface HeroProps {
   locale: string;

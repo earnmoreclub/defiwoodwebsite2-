@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Quote, Sparkles } from 'lucide-react';
-import AIImage from "@/src/components/PexelsImage"';
+import PexelsImage from "@/src/components/PexelsImage";
 
 interface AboutSectionProps {
   locale: string;

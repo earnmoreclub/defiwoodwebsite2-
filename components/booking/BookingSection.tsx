@@ -9,7 +9,7 @@ import {
   PREFERRED_TIME_OPTIONS,
   validateBookingForm,
 } from '@/lib/calcom';
-import AIImage from "@/src/components/PexelsImage"';
+import PexelsImage from "@/src/components/PexelsImage";
 import type { BookingFormData } from '@/types';
 
 interface BookingSectionProps {

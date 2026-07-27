@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Brain, Moon, Users, ArrowUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ComponentType } from 'react';
-import AIImage from "@/src/components/PexelsImage"';
+import PexelsImage from "@/src/components/PexelsImage";
 
 interface PillarsProps {
   locale: string;
