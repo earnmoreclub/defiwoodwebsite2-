@@ -67,7 +67,6 @@ export default function AIDemoPage() {
               category={selectedCategory as any}
               width={1024}
               height={1024}
-              provider="puter"
               className="w-full max-w-2xl mx-auto"
               priority
             />
@@ -81,7 +80,6 @@ export default function AIDemoPage() {
             prompt="A peaceful zen garden with cherry blossoms, soft morning light, photorealistic, 4K"
             width={1024}
             height={576}
-            provider="puter"
             className="w-full max-w-3xl mx-auto"
           />
         </div>
