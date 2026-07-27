@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { JournalArticle, JournalCategory } from '@/types/journal';
 import ArticleCard from './ArticleCard';
 import CategoryFilter from './CategoryFilter';
@@ -11,6 +12,8 @@ interface JournalIndexProps {
   categories: JournalCategory[];
   locale: string;
 }
+
+const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function JournalIndex({ articles, categories, locale }: JournalIndexProps) {
   const [activeCategory, setActiveCategory] = useState<JournalCategory | 'all'>('all');
@@ -27,37 +30,59 @@ export default function JournalIndex({ articles, categories, locale }: JournalIn
 
   return (
     <>
-      {/* Hero Section with AI Image */}
-      <section className="mb-12">
-        <div className="relative rounded-3xl overflow-hidden">
+      {/* Hero Section */}
+      <section className="mb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: EASE_OUT_EXPO }}
+          className="relative rounded-3xl overflow-hidden ring-1 ring-white/10 shadow-2xl shadow-purple-500/10"
+        >
           {/* AI-generated background */}
-          <div className="absolute inset-0 opacity-40">
+          <div className="absolute inset-0 opacity-50">
             <PexelsImage
               category="journal"
               width={1600}
               height={800}
               rounded="3xl"
               className="w-full h-full"
+              priority
             />
           </div>
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-dark-950/90 via-dark-900/70 to-dark-950/90" />
+
+          {/* Layered gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-dark-950/92 via-dark-900/80 to-dark-950/92" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark-950/80 via-transparent to-dark-950/40" />
+
+          {/* Glow accents */}
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-500/15 rounded-full blur-3xl" aria-hidden="true" />
+          <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-cyan-500/15 rounded-full blur-3xl" aria-hidden="true" />
+
           {/* Text content */}
-          <div className="relative text-center py-16 px-6">
-            <div className="inline-block px-4 py-1.5 mb-4 rounded-full bg-purple-400/20 border border-purple-400/30">
-              <span className="text-xs uppercase tracking-editorial text-purple-300 font-medium">
+          <div className="relative text-center py-20 px-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="inline-block px-4 py-1.5 mb-5 rounded-full glass border border-purple-400/30"
+            >
+              <span className="text-[11px] uppercase tracking-editorial text-purple-200 font-semibold">
                 Awareness Be Journal
               </span>
-            </div>
-            <h1 className="font-serif text-5xl md:text-6xl text-white mb-4">
-              神經科學 · 覺察 · 自我成長
+            </motion.div>
+
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-white mb-5 tracking-tight text-balance">
+              <span className="bg-gradient-to-br from-white via-purple-100 to-cyan-100 bg-clip-text text-transparent">
+                神經科學 · 覺察 · 自我成長
+              </span>
             </h1>
-            <p className="text-slate-300 max-w-2xl mx-auto text-lg leading-relaxed">
+            <p className="text-slate-300 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
               探索身體、情緒與大腦之間的深層連結，
+              <br className="hidden sm:block" />
               透過科學實證的視角，深化你的自我覺察。
             </p>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Category Filter */}
@@ -69,8 +94,8 @@ export default function JournalIndex({ articles, categories, locale }: JournalIn
 
       {/* Featured Article */}
       {featuredArticle && activeCategory === 'all' && (
-        <section className="mb-12">
-          <h2 className="text-xs uppercase tracking-editorial text-slate-400 mb-4">
+        <section className="mb-14">
+          <h2 className="text-[11px] uppercase tracking-editorial text-slate-400 mb-5 font-semibold">
             精選文章
           </h2>
           <ArticleCard article={featuredArticle} locale={locale} featured />
@@ -79,11 +104,11 @@ export default function JournalIndex({ articles, categories, locale }: JournalIn
 
       {/* Articles Grid */}
       <section>
-        <h2 className="text-xs uppercase tracking-editorial text-slate-400 mb-4">
+        <h2 className="text-[11px] uppercase tracking-editorial text-slate-400 mb-5 font-semibold">
           {activeCategory === 'all' ? '所有文章' : activeCategory}
         </h2>
         {filteredArticles.length === 0 ? (
-          <div className="text-center py-16 text-slate-500">
+          <div className="text-center py-20 text-slate-500">
             此分類尚無文章
           </div>
         ) : (
