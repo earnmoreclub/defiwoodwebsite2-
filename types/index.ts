@@ -1,5 +1,12 @@
 // Types for Awareness Be platform
 
+// Re-export Pexels types for convenience
+export type { PexelsPhoto, PexelsSearchResponse, PexelsSearchOptions, ImageCategory } from '@/lib/pexels';
+
+// PexelsImage component types
+export type ImageQuality = 'tiny' | 'small' | 'medium' | 'large' | 'large2x';
+export type RoundedClass = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+
 export interface Article {
   id: string;
   title: string;
