@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import AIImage from '@/src/components/AIImage';
+import PexelsImage from '@/src/components/PexelsImage';
 
 const categories = [
   { id: 'hero', label: 'Hero Section' },
@@ -62,7 +62,7 @@ export default function AIDemoPage() {
           </div>
           
           <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-            <AIImage
+            <PexelsImage
               key={`${selectedCategory}-${refreshKey}`}
               category={selectedCategory as any}
               width={1024}
@@ -77,7 +77,7 @@ export default function AIDemoPage() {
         {/* Custom Prompt Section */}
         <div className="mb-8">
           <h2 className="text-xl mb-4">Custom Prompt Example:</h2>
-          <AIImage
+          <PexelsImage
             prompt="A peaceful zen garden with cherry blossoms, soft morning light, photorealistic, 4K"
             width={1024}
             height={576}
