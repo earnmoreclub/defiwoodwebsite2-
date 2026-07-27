@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Brain } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import AIImage from '@/src/components/AIImage';
+import AIImage from "@/src/components/PexelsImage"';
 
 interface MBTISectionProps {
   locale: string;
@@ -31,7 +31,7 @@ export default function MBTISection({ locale }: MBTISectionProps) {
         >
           {/* AI-generated background */}
           <div className="absolute inset-0 opacity-40">
-            <AIImage
+            <PexelsImage
               category="mbti"
               width={1024}
               height={768}

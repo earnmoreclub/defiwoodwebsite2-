@@ -9,7 +9,7 @@ import {
   PREFERRED_TIME_OPTIONS,
   validateBookingForm,
 } from '@/lib/calcom';
-import AIImage from '@/src/components/AIImage';
+import AIImage from "@/src/components/PexelsImage"';
 import type { BookingFormData } from '@/types';
 
 interface BookingSectionProps {
@@ -268,7 +268,7 @@ export default function BookingSection({ locale: _locale }: BookingSectionProps)
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl" />
               {/* AI image background */}
               <div className="absolute inset-0 opacity-30 mix-blend-luminosity">
-                <AIImage
+                <PexelsImage
                   category="booking"
                   width={800}
                   height={600}

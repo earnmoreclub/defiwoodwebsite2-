@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight, Calendar, BookOpen, Sparkles, Eye, Brain, Heart } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import AIImage from '@/src/components/AIImage';
+import AIImage from "@/src/components/PexelsImage"';
 
 interface HeroProps {
   locale: string;
@@ -185,7 +185,7 @@ export default function Hero({ locale }: HeroProps) {
             <div className="relative glass-strong rounded-3xl aspect-[4/5] flex flex-col justify-center overflow-hidden">
               {/* AI-generated background image */}
               <div className="absolute inset-0 opacity-50 mix-blend-luminosity">
-                <AIImage
+                <PexelsImage
                   category="hero"
                   width={1024}
                   height={1024}

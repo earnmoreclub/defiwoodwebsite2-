@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react';
 import { JournalArticle, JournalCategory } from '@/types/journal';
 import ArticleCard from './ArticleCard';
 import CategoryFilter from './CategoryFilter';
-import AIImage from '@/src/components/AIImage';
+import AIImage from "@/src/components/PexelsImage"';
 
 interface JournalIndexProps {
   articles: JournalArticle[];
@@ -32,7 +32,7 @@ export default function JournalIndex({ articles, categories, locale }: JournalIn
         <div className="relative rounded-3xl overflow-hidden">
           {/* AI-generated background */}
           <div className="absolute inset-0 opacity-40">
-            <AIImage
+            <PexelsImage
               category="journal"
               width={1600}
               height={800}

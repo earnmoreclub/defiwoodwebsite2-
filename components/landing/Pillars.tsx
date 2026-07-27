@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Brain, Moon, Users, ArrowUpRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import type { ComponentType } from 'react';
-import AIImage from '@/src/components/AIImage';
+import AIImage from "@/src/components/PexelsImage"';
 
 interface PillarsProps {
   locale: string;
@@ -108,7 +108,7 @@ export default function Pillars({ locale: _locale }: PillarsProps) {
                 <div className={`relative p-8 rounded-3xl glass border-white/10 transition-all duration-500 group-hover:scale-[1.03] ${pillar.borderHover} group-hover:shadow-2xl ${pillar.glow} overflow-hidden min-h-[280px]`}>
                   {/* AI-generated background image */}
                   <div className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-500">
-                    <AIImage
+                    <PexelsImage
                       category={pillar.imageCategory}
                       width={1024}
                       height={768}

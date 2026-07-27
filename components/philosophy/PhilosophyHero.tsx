@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useCopy } from './PhilosophyExperience';
-import AIImage from '@/src/components/AIImage';
+import AIImage from "@/src/components/PexelsImage"';
 
 type Props = { scrollTo: string };
 
@@ -89,7 +89,7 @@ export default function PhilosophyHero({ scrollTo }: Props) {
           <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-charcoal/10 shadow-[0_30px_60px_-30px_rgba(28,25,23,0.3)]">
             {/* AI-generated background image */}
             <div className="absolute inset-0">
-              <AIImage
+              <PexelsImage
                 category="philosophy"
                 width={800}
                 height={1000}

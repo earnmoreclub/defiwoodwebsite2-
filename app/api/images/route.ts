@@ -13,6 +13,7 @@ const imageQueryMap: Record<string, readonly string[]> = {
   wellness: imageQueries.wellness,
   philosophy: imageQueries.philosophy,
   journal: imageQueries.journal,
+  mbti: imageQueries.mbti,
 };
 
 // Fetch a specific photo by ID from Pexels

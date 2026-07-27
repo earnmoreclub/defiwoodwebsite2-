@@ -115,6 +115,7 @@ export const imageQueries = {
   wellness: ['yoga practice wellness', 'holistic health balance', 'relaxation spa calm'],
   philosophy: ['yin yang balance', 'ancient wisdom modern', 'zen minimalism aesthetic'],
   journal: ['journal writing desk', 'contemplative writing moment', 'creative notebook peaceful'],
+  mbti: ['person thinking mirror reflection', 'psychology self discovery', 'mind map creative thinking'],
 } as const;
 
 // Curated specific image IDs for premium quality (all verified)
